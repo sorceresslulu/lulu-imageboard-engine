@@ -11,6 +11,7 @@
   var TMP_DIRECTORY = './tmp';
 
   var tasks = [
+    'vendor',
     'angular-modules',
     'angular-templates',
     'concat-js'
@@ -33,17 +34,37 @@
     MINIFY = false;
   });
 
+  gulp.task('vendor', function() {
+    var src = [
+      'bower_components/sprintf/dist/sprintf.min.js'
+    ];
+
+    return gulp.src(src)
+      .pipe(concat('vendor.js'))
+      .pipe(gulp.dest(TMP_DIRECTORY))
+    ;
+  });
+
   gulp.task('angular-modules', function() {
+    var modules = [
+      'main',
+      'board'
+    ];
+
     var src = MINIFY
       ? [
       'bower_components/angular/angular.min.js',
-      'bower_components/angular-ui-router/release/amgilar-ui-router.min.js',
-      'angular/modules/**/*.js'
+      'bower_components/angular-ui-router/release/angular-ui-router.min.js',
+      'bower_components/sprintf/dist/angular-sprintf.min.js'
     ] : [
       'bower_components/angular/angular.js',
-      'bower_components/angular-ui-router/release/amgilar-ui-router.js',
-      'angular/modules/**/*.js'
+      'bower_components/angular-ui-router/release/angular-ui-router.js',
+      'bower_components/sprintf/dist/angular-sprintf.js'
     ];
+
+    modules.forEach(function(module) {
+      src.push('angular/modules/'+module+'/**/*.js');
+    });
 
     return gulp.src(src)
       .pipe(concat('angular-modules.js'))
@@ -54,13 +75,17 @@
   gulp.task('angular-templates', function() {
     return gulp.src('angular/**/template.html')
       .pipe(templateCache())
-      .pipe(concat('angular-template.js'))
+      .pipe(concat('angular-templates.js'))
       .pipe(gulp.dest(TMP_DIRECTORY))
     ;
   });
 
   gulp.task('concat-js', function() {
-    var task = gulp.src(TMP_DIRECTORY + '/**/*.js')
+    var task = gulp.src([
+        TMP_DIRECTORY + '/**/vendor.js',
+        TMP_DIRECTORY + '/**/angular-modules.js',
+        TMP_DIRECTORY + '/**/angular-templates.js'
+    ])
       .pipe(concat('app.js'))
     ;
 

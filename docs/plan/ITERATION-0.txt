@@ -3,8 +3,8 @@ ITERATION-0
 
 [x] FEAT00001: setup initial docs/file structure
 [x] FEAT00002: Backend, Domain model: Board, BoardList
-[ ] FEAT00003: Frontend, Index: Show board list
+[x] FEAT00003: Frontend, Index: Show board list
 [x] FEAT00004: bash-script to fast commit
 [x] FEAT00005: REST / Boards / List
 [x] FEAT00006: REST / Boards / By Id
-[ ] FEAT00007: setup frontend (gulp/bower/etc)
+[x] FEAT00007: setup frontend (gulp/bower/etc)

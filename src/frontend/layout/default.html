@@ -2,9 +2,16 @@
 <html>
   <head>
     <title>Luluchan</title>
-    <script src="/assets/app.js"></script>
+    <base href="/">
+    <script src="/public/assets/app.js"></script>
   </head>
-  <body>
+  <body ng-app="main">
+    <nav>
+      <ul>
+        <li><a href="#" ui-sref="main-index">Main/Index</a></li>
+        <li><a href="#" ui-sref="board-index">Board/Index</a></li>
+      </ul>
+    </nav>
     <div ui-view></div>
   </body>
 </html>

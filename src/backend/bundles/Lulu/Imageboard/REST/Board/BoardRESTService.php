@@ -30,7 +30,7 @@ class BoardRESTService implements RESTServiceInterface
      * @inheritdoc
      */
     public function initRoutes(RouteCollection $routes) {
-        $routes->get('/backend/rest/boards/', function () {
+        $routes->get('/backend/rest/board/', function () {
             $jsonResponse = [];
 
             /** @var Board $board */
@@ -41,7 +41,7 @@ class BoardRESTService implements RESTServiceInterface
             return new Ok($jsonResponse);
         });
 
-        $routes->get('/backend/rest/boards/{id}', function (Request $request, Response $response, array $args) {
+        $routes->get('/backend/rest/board/{id}', function (Request $request, Response $response, array $args) {
             try {
                 $board = $this->boardRepository->getBoardById($args['id']);
             } catch (\OutOfBoundsException $e) {
