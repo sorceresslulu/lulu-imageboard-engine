@@ -1,0 +1,6 @@
+ITERATION-0
+===========
+
+[ ] FEAT00001: setup initial docs/file structure
+[ ] FEAT00002: Backend, Domain model: Board, BoardList
+[ ] FEAT00003: Frontend, Index: Show board list
