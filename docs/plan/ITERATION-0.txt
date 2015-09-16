@@ -7,3 +7,4 @@ ITERATION-0
 [x] FEAT00004: bash-script to fast commit
 [x] FEAT00005: REST / Boards / List
 [x] FEAT00006: REST / Boards / By Id
+[ ] FEAT00007: setup frontend (gulp/bower/etc)
