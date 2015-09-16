@@ -45,7 +45,7 @@ read accept;
 
 case $accept in
 "y")
-`git commit -m $message`
+git commit -m "$message"
 ;;
 *)
 ;;
