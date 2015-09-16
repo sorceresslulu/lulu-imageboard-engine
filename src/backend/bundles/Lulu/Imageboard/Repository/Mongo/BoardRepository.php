@@ -17,20 +17,18 @@ class BoardRepository implements RepositoryInterface
      * BoardRepository constructor.
      * @param \MongoCollection $boardsMongoCollection
      */
-    public function __construct(\MongoCollection $boardsMongoCollection)
-    {
+    public function __construct(\MongoCollection $boardsMongoCollection) {
         $this->boardsMongoCollection = $boardsMongoCollection;
     }
 
     /**
      * @inheritdoc
      */
-    public function getBoardById($id)
-    {
+    public function getBoardById($id) {
         $boardBSON = $this->boardsMongoCollection->findOne(['_id' => new \MongoId($id)]);
 
-        if(!($boardBSON)) {
-            throw new \OutOfBoundsException(sprintf('Board with Id `%s` not found', (string) $id));
+        if (!($boardBSON)) {
+            throw new \OutOfBoundsException(sprintf('Board with Id `%s` not found', (string)$id));
         }
 
         return $this->createBoardFromBSON($boardBSON);
@@ -39,11 +37,10 @@ class BoardRepository implements RepositoryInterface
     /**
      * @inheritdoc
      */
-    public function getAllBoards()
-    {
+    public function getAllBoards() {
         $boards = [];
 
-        foreach($this->boardsMongoCollection->find() as $boardBSON) {
+        foreach ($this->boardsMongoCollection->find() as $boardBSON) {
             $boards[] = $this->createBoardFromBSON($boardBSON);
         }
 
@@ -55,8 +52,7 @@ class BoardRepository implements RepositoryInterface
      * @param array $boardBSON
      * @return Board
      */
-    private function createBoardFromBSON(array $boardBSON)
-    {
+    private function createBoardFromBSON(array $boardBSON) {
         return new Board(
             $boardBSON['id'],
             $boardBSON['title']

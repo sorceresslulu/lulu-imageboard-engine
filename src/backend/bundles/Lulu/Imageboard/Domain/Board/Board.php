@@ -20,8 +20,7 @@ class Board
      * @param mixed $id
      * @param string $title
      */
-    public function __construct($id, $title)
-    {
+    public function __construct($id, $title) {
         $this->id = $id;
         $this->title = $title;
     }
@@ -30,8 +29,7 @@ class Board
      * Returns Id
      * @return mixed
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -39,8 +37,7 @@ class Board
      * Returns title
      * @return string
      */
-    public function getTitle()
-    {
+    public function getTitle() {
         return $this->title;
     }
 }
