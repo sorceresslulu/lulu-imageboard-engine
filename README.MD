@@ -4,11 +4,14 @@ Imageboard engine. The modern way.
 
 Backend
 -------
-[ ] php
-[ ] MongoDB
+– php
+
+– MongoDB
 
 Frontend
 --------
-[ ] Angular.js
-[ ] TypeScript
-[ ] GULP
+– Angular.js
+
+– TypeScript
+
+– GULP
