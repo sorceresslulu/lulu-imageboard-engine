@@ -11,7 +11,7 @@ class BoardCollectionFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator) {
         /** @var \MongoDB $mongoDB */
-        $mongoDB = $serviceLocator->get('Lulu\Imageboard\Factory\Adapter\Mongo\MongoDB');
+        $mongoDB = $serviceLocator->get('Lulu\Imageboard\Adapter\Mongo\MongoDB');
 
         return $mongoDB->selectCollection('boards');
     }

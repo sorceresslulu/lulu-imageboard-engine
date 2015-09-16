@@ -26,11 +26,11 @@ class MongoClientFactory implements FactoryInterface
 
         $mongoClient = new \MongoClient(
             $mongoConfig['server'],
-            isset($mongoConfig['options']) ? $mongoConfig['options'] : null,
-            isset($mongoConfig['driverOptions']) ? $mongoConfig['driverOptions'] : null
+            isset($mongoConfig['options']) ? $mongoConfig['options'] : [],
+            isset($mongoConfig['driverOptions']) ? $mongoConfig['driverOptions'] : []
         );
 
-        if($mongoClient->connected) {
+        if($mongoClient->connect()) {
             return $mongoClient;
         }else{
             throw new \Exception(sprintf('Failed to connect'));

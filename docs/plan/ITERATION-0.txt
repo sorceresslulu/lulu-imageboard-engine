@@ -5,3 +5,5 @@ ITERATION-0
 [ ] FEAT00002: Backend, Domain model: Board, BoardList
 [ ] FEAT00003: Frontend, Index: Show board list
 [x] FEAT00004: bash-script to fast commit
+[x] FEAT00005: REST / Boards / List
+[ ] FEAT00006: REST / Boards / By Id

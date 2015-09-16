@@ -11,8 +11,11 @@ class Bootstrap implements BootstrapInterface
      */
     private $serviceManager;
 
+    /**
+     * @inheritdoc
+     */
     public function bootstrap(array $configuration) {
-        $this->serviceManager = $this->createServiceManager($configuration['zend_service_manager']);
+        $this->serviceManager = $this->createServiceManager($configuration);
     }
 
     /**
@@ -22,8 +25,9 @@ class Bootstrap implements BootstrapInterface
      */
     private function createServiceManager(array $serviceManagerConfiguration) {
         $serviceManager = new ServiceManager();
+        $serviceManager->setService('Configuration', $serviceManagerConfiguration);
 
-        foreach($serviceManagerConfiguration['factories'] as $serviceName => $factory) {
+        foreach($serviceManagerConfiguration['zend_service_manager']['factories'] as $serviceName => $factory) {
             $serviceManager->setFactory($serviceName, $factory);
         }
 
