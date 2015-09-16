@@ -15,7 +15,7 @@ class MongoDBFactory implements FactoryInterface
         $configuration = $serviceLocator->get('Configuration');
         $mongoConfig = $configuration[MongoClientFactory::MONGO_DB_CONFIG_KEY];
 
-        if(!(isset($mongoConfig['db']))) {
+        if (!(isset($mongoConfig['db']))) {
             throw new \Exception('Key `db` is required');
         }
 

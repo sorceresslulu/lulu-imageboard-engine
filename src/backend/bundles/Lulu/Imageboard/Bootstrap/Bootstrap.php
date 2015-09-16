@@ -27,7 +27,7 @@ class Bootstrap implements BootstrapInterface
         $serviceManager = new ServiceManager();
         $serviceManager->setService('Configuration', $serviceManagerConfiguration);
 
-        foreach($serviceManagerConfiguration['zend_service_manager']['factories'] as $serviceName => $factory) {
+        foreach ($serviceManagerConfiguration['zend_service_manager']['factories'] as $serviceName => $factory) {
             $serviceManager->setFactory($serviceName, $factory);
         }
 

@@ -14,13 +14,13 @@ class MongoClientFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator) {
         $configuration = $serviceLocator->get('Configuration');
 
-        if(!(isset($configuration[self::MONGO_DB_CONFIG_KEY]))) {
+        if (!(isset($configuration[self::MONGO_DB_CONFIG_KEY]))) {
             throw new \Exception(sprintf('No configuration by key `%s` available', self::MONGO_DB_CONFIG_KEY));
         }
 
         $mongoConfig = $configuration[self::MONGO_DB_CONFIG_KEY];
 
-        if(!(isset($mongoConfig['server']))) {
+        if (!(isset($mongoConfig['server']))) {
             throw new \Exception('Key `server` is required');
         }
 
@@ -30,9 +30,9 @@ class MongoClientFactory implements FactoryInterface
             isset($mongoConfig['driverOptions']) ? $mongoConfig['driverOptions'] : []
         );
 
-        if($mongoClient->connect()) {
+        if ($mongoClient->connect()) {
             return $mongoClient;
-        }else{
+        } else {
             throw new \Exception(sprintf('Failed to connect'));
         }
     }

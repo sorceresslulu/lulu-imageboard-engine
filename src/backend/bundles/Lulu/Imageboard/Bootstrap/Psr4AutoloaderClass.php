@@ -62,8 +62,7 @@ class Psr4AutoloaderClass
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         spl_autoload_register(array($this, 'loadClass'));
     }
 
@@ -78,8 +77,7 @@ class Psr4AutoloaderClass
      * than last.
      * @return void
      */
-    public function addNamespace($prefix, $base_dir, $prepend = false)
-    {
+    public function addNamespace($prefix, $base_dir, $prepend = false) {
         // normalize namespace prefix
         $prefix = trim($prefix, '\\') . '\\';
 
@@ -106,8 +104,7 @@ class Psr4AutoloaderClass
      * @return mixed The mapped file name on success, or boolean false on
      * failure.
      */
-    public function loadClass($class)
-    {
+    public function loadClass($class) {
         // the current namespace prefix
         $prefix = $class;
 
@@ -144,8 +141,7 @@ class Psr4AutoloaderClass
      * @return mixed Boolean false if no mapped file can be loaded, or the
      * name of the mapped file that was loaded.
      */
-    protected function loadMappedFile($prefix, $relative_class)
-    {
+    protected function loadMappedFile($prefix, $relative_class) {
         // are there any base directories for this namespace prefix?
         if (isset($this->prefixes[$prefix]) === false) {
             return false;
@@ -178,8 +174,7 @@ class Psr4AutoloaderClass
      * @param string $file The file to require.
      * @return bool True if the file exists, false if not.
      */
-    protected function requireFile($file)
-    {
+    protected function requireFile($file) {
         if (file_exists($file)) {
             require $file;
             return true;
