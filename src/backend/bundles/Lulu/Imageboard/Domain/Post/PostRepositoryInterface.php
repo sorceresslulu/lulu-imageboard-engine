@@ -28,9 +28,23 @@ interface PostRepositoryInterface
     public function getPostsOfThread(Thread $thread);
 
     /**
+     * Returns all posts by thread Id
+     * @param $threadId
+     * @return PostList
+     */
+    public function getPostsByThreadId($threadId);
+
+    /**
      * Returns post by Id
      * @param $id
      * @return Post
      */
     public function getPostById($id);
+
+    /**
+     * Returns posts by Ids
+     * @param array $ids
+     * @return PostList
+     */
+    public function getPostsByIds(array $ids);
 }

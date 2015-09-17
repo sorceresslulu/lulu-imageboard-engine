@@ -3,5 +3,4 @@ BACKLOG.TXT
 
 [ ] FEATURE0009: swagger
 [ ] BUG0001: gulp requires 2 execution to make app.js
-[x] FEATURE0017: Post / Domain
-[x] FEATURE0018: Post / REST
+
