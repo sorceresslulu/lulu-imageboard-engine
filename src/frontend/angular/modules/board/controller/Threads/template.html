@@ -1,0 +1,13 @@
+<article class="board board-threads">
+  <header>
+    <h1>{{board.title}}</h1>
+    <p>{{board.description}}</p>
+  </header>
+  <div class="threads-list">
+    <ul>
+      <li ng-repeat="thread in threads">
+        ThreadId: {{thread.id}}
+      </li>
+    </ul>
+  </div>
+</article>

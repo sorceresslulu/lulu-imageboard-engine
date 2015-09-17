@@ -58,7 +58,7 @@ class PostRESTService implements RESTServiceInterface
      * @param RouteCollection $routes
      */
     public function routeGetAll(RouteCollection $routes) {
-        $routes->get('/backend/rest/post/', function (Request $request) {
+        $routes->get('/backend/rest/post', function (Request $request) {
             $jsonResponse = [];
             $seekFromRequest = new SeekFromRequest($request, self::MAX_LIMIT, self::DEFAULT_LIMIT);
 

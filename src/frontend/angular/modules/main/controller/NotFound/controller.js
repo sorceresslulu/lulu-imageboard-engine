@@ -8,7 +8,6 @@
 
   function factory() {
     function MainNotFoundController() {
-      alert('???');
     }
 
     return new MainNotFoundController();

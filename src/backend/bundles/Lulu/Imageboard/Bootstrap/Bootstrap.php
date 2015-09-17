@@ -15,6 +15,7 @@ class Bootstrap implements BootstrapInterface
      * @inheritdoc
      */
     public function bootstrap(array $configuration) {
+        $this->setupErrorHandler();
         $this->serviceManager = $this->createServiceManager($configuration);
     }
 
@@ -32,6 +33,15 @@ class Bootstrap implements BootstrapInterface
         }
 
         return $serviceManager;
+    }
+
+    /**
+     * Setup error handler
+     */
+    private function setupErrorHandler() {
+        set_error_handler(function($errno, $errstr, $errfile, $errline) {
+            throw new \Exception(sprintf('PHP Error [%d]: %s in file %s:%d', $errno, $errstr, $errfile, $errline));
+        });
     }
 
     /**

@@ -43,62 +43,10 @@ class ThreadRESTService implements RESTServiceInterface
      * @inheritdoc
      */
     public function initRoutes(RouteCollection $routes) {
-        $routes->get('/backend/rest/thread/', function(Request $request, Response $response, array $args) {
-            $seek = new Seek(
-                self::MAX_LIMIT,
-                (int) $request->get('offset', 0),
-                (int) $request->get('limit', self::DEFAULT_LIMIT)
-            );
-
-            $jsonResponse = [];
-            $threads = $this->threadRepository->getAllThreadsWithSeek($seek);
-
-            foreach($threads as $thread) {
-                $jsonResponse[] = $this->convertThreadToJSON($thread);
-            }
-
-            return new Ok($jsonResponse);
-        });
-
-        $routes->get('/backend/rest/thread/by-board/{boardId}', function(Request $request, Response $response, array $args) {
-            $seek = new Seek(
-                self::MAX_LIMIT,
-                (int) $request->get('offset', 0),
-                (int) $request->get('limit', self::DEFAULT_LIMIT)
-            );
-
-            $board = $this->boardPrototypeFactory->getBoardById($args['boardId']);
-
-            $jsonResponse = [];
-            $threads = $this->threadRepository->getThreadsByBoard($board, $seek);
-
-            foreach($threads as $thread) {
-                $jsonResponse[] = $this->convertThreadToJSON($thread);
-            }
-
-            return new Ok($jsonResponse);
-        });
-
-        $routes->get('/backend/rest/thread/by-ids/{ids}', function(Request $request, Response $response, array $args) {
-            $jsonResponse = [];
-            $threads = $this->threadRepository->getThreadsByIds(explode(',', $args['ids']));
-
-            foreach($threads as $thread) {
-                $jsonResponse[] = $this->convertThreadToJSON($thread);
-            }
-
-            return new Ok($jsonResponse);
-        });
-
-        $routes->get('/backend/rest/thread/{id}', function(Request $request, Response $response, array $args) {
-            try {
-                $thread = $this->threadRepository->getThreadById($args['id']);
-            }catch(\OutOfBoundsException $e)  {
-                throw new NotFoundException($e->getMessage());
-            }
-
-            return new Ok($this->convertThreadToJSON($thread));
-        });
+        $this->routeGetAll($routes);
+        $this->routeGetByBoard($routes);
+        $this->routeGetByIds($routes);
+        $this->routeGetById($routes);
     }
 
     /**
@@ -108,11 +56,88 @@ class ThreadRESTService implements RESTServiceInterface
      */
     private function convertThreadToJSON(Thread $thread) {
         return [
-            'id' => $thread->getId(),
-            'board' => [
-                'id' => $thread->getBoard()->getId(),
-                'title' => $thread->getBoard()->getTitle()
-            ]
+            'id' => (string) $thread->getId()
         ];
+    }
+
+    /**
+     * Route – GetAll
+     * @param RouteCollection $routes
+     */
+    public function routeGetAll(RouteCollection $routes) {
+        $routes->get('/backend/rest/thread', function (Request $request, Response $response, array $args) {
+            $seek = new Seek(
+                self::MAX_LIMIT,
+                (int)$request->get('offset', 0),
+                (int)$request->get('limit', self::DEFAULT_LIMIT)
+            );
+
+            $jsonResponse = [];
+            $threads = $this->threadRepository->getAllThreadsWithSeek($seek);
+
+            foreach ($threads as $thread) {
+                $jsonResponse[] = $this->convertThreadToJSON($thread);
+            }
+
+            return new Ok($jsonResponse);
+        });
+    }
+
+    /**
+     * Route – GetByBoard
+     * @param RouteCollection $routes
+     */
+    public function routeGetByBoard(RouteCollection $routes) {
+        $routes->get('/backend/rest/thread/by-board/{boardId}', function (Request $request, Response $response, array $args) {
+            $seek = new Seek(
+                self::MAX_LIMIT,
+                (int)$request->get('offset', 0),
+                (int)$request->get('limit', self::DEFAULT_LIMIT)
+            );
+
+            $board = $this->boardPrototypeFactory->getBoardById($args['boardId']);
+
+            $jsonResponse = [];
+            $threads = $this->threadRepository->getThreadsByBoard($board, $seek);
+
+            foreach ($threads as $thread) {
+                $jsonResponse[] = $this->convertThreadToJSON($thread);
+            }
+
+            return new Ok($jsonResponse);
+        });
+    }
+
+    /**
+     * Route – GetByIds
+     * @param RouteCollection $routes
+     */
+    public function routeGetByIds(RouteCollection $routes) {
+        $routes->get('/backend/rest/thread/by-ids/{ids}', function (Request $request, Response $response, array $args) {
+            $jsonResponse = [];
+            $threads = $this->threadRepository->getThreadsByIds(explode(',', $args['ids']));
+
+            foreach ($threads as $thread) {
+                $jsonResponse[] = $this->convertThreadToJSON($thread);
+            }
+
+            return new Ok($jsonResponse);
+        });
+    }
+
+    /**
+     * Route – GetById
+     * @param RouteCollection $routes
+     */
+    public function routeGetById(RouteCollection $routes) {
+        $routes->get('/backend/rest/thread/{id}', function (Request $request, Response $response, array $args) {
+            try {
+                $thread = $this->threadRepository->getThreadById($args['id']);
+            } catch (\OutOfBoundsException $e) {
+                throw new NotFoundException($e->getMessage());
+            }
+
+            return new Ok($this->convertThreadToJSON($thread));
+        });
     }
 }

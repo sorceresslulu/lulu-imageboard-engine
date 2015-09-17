@@ -30,7 +30,7 @@ class BoardRESTService implements RESTServiceInterface
      * @inheritdoc
      */
     public function initRoutes(RouteCollection $routes) {
-        $routes->get('/backend/rest/board/', function () {
+        $routes->get('/backend/rest/board', function () {
             $jsonResponse = [];
 
             /** @var Board $board */
@@ -59,8 +59,10 @@ class BoardRESTService implements RESTServiceInterface
      */
     private function boardToJSON(Board $board) {
         return [
-            'id' => $board->getId(),
-            'title' => $board->getTitle()
+            'id' => (string) $board->getId(),
+            'url' => $board->getUrl(),
+            'title' => $board->getTitle(),
+            'description' => $board->getDescription()
         ];
     }
 }

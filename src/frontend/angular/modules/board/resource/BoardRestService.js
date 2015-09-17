@@ -6,34 +6,9 @@
     .factory('BoardRestService', factory)
   ;
 
-  factory.$inject = ['$http'];
+  factory.$inject = ['$resource'];
 
-  function factory($http) {
-    function BoardRestService() {
-    }
-
-    BoardRestService.prototype.getAll = getAll;
-    BoardRestService.prototype.getById = getById;
-
-    return new BoardRestService();
-
-    /**
-     * Fetch all boards
-     * @returns {HttpPromise}
-     */
-    function getAll() {
-      return $http.get('/backend/rest/board/');
-    }
-
-    /**
-     * Fetch boards by Id
-     * @param id
-     * @returns {HttpPromise}
-     */
-    function getById(id) {
-      return $http.get('/backend/rest/board/:id', {
-        id: id
-      });
-    }
+  function factory($resource) {
+    return $resource('/backend/rest/board/:boardId', { boardId: '@id' })
   }
 })(angular);

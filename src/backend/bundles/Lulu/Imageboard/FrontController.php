@@ -2,7 +2,9 @@
 namespace Lulu\Imageboard;
 
 use League\Route\RouteCollection;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Zend\ServiceManager\ServiceManager;
 
 class FrontController
@@ -50,9 +52,17 @@ class FrontController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function dispatch(Request $request) {
-
-        $dispatcher = $this->router->getDispatcher();
-        $response = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
+        try {
+            $dispatcher = $this->router->getDispatcher();
+            $response = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
+        }catch(\Exception $e){
+            $response = new JsonResponse([
+                'status_code' => 500,
+                'message' => $e->getMessage(),
+                'trace' => $e->getTrace()
+            ]);
+            $response->setStatusCode(Response::HTTP_BAD_REQUEST);
+        }
 
         return $response;
     }

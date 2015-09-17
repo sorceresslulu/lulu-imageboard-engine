@@ -53,9 +53,11 @@ class BoardRepository implements BoardRepositoryInterface
      * @return Board
      */
     private function createBoardFromBSON(array $boardBSON) {
-        return new Board(
-            $boardBSON['_id'],
-            $boardBSON['title']
-        );
+        $board = new Board($boardBSON['_id']);
+        $board->setTitle($boardBSON['title']);
+        $board->setDescription($boardBSON['description']);
+        $board->setUrl($boardBSON['url']);
+
+        return $board;
     }
 }

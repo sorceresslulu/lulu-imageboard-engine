@@ -12,21 +12,18 @@
     function BoardService() {
       this.promise = null;
       this.boards = [];
+      this.urlMap = {};
+
+      this.fetchBoards();
     }
 
     BoardService.prototype.getAllBoards = getAllBoards;
     BoardService.prototype.getBoardById = getBoardById;
+    BoardService.prototype.getBoardByURL = getBoardByURL;
     BoardService.prototype.fetchBoards = fetchBoards;
+    BoardService.prototype._applyBoards = _applyBoards;
 
-    return {
-      /**
-       * Create and returns BoardService instance
-       * @returns {BoardService}
-       */
-      create: function createInstance() {
-        return new BoardService();
-      }
-    };
+    return new BoardService();
 
     /**
      * Returns all boards
@@ -37,19 +34,46 @@
     }
 
     /**
+     * Returns board by URL
+     * @param boardURL
+     * @returns {*}
+     */
+    function getBoardByURL(boardURL) {
+      if(this.urlMap.hasOwnProperty(boardURL)) {
+        return this.urlMap[boardURL];
+      }else{
+        throw new Error(sprintf('Board with url %(boardURL)s not found', {
+          'boardURL': boardURL
+        }));
+      }
+    }
+
+    /**
+     * Setup boards
+     * @param boards
+     * @private
+     */
+    function _applyBoards(boards) {
+      var service = this;
+
+      angular.forEach(boards, function(board) {
+        service.boards.push(board);
+        service.urlMap[board.url] = board;
+      });
+    }
+
+    /**
      * Fetch boards
-     * @returns {HttpPromise}
+     * @returns HttpPromise
      */
     function fetchBoards() {
       var service = this;
 
-      return this.promise = BoardRestService.getAll().then(function(response) {
-        angular.forEach(response.data, function(board) {
-          service.boards.push(board);
-        });
+      return this.promise = BoardRestService.query(function(response) {
+        service._applyBoards(response);
 
         return service.boards;
-      });
+      }).$promise;
     }
 
     /**

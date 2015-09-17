@@ -62,9 +62,15 @@
     return tasks;
   }
 
+  /**
+   * Gulp watch
+   */
   function setupGulpWatch() {
-    gulp.watch('./**/*.js', this.listTasks(this.options));
-    gulp.watch('./**/*.css', this.listTasks(this.options));
+    var options = this.options;
+
+    gulp.watch('./**/*.js', this.listTasks(options));
+    gulp.watch('./**/*.css', this.listTasks(options));
+    gulp.watch('./**/*.html', this.listTasks(options));
   }
 
   /**
