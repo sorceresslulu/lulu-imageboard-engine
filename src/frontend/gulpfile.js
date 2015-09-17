@@ -14,6 +14,7 @@
       minify: true
     };
 
+    this.setupGulpWatch();
     this.setupModeTask();
     this.setupVendorTask();
     this.setupAngularTask();
@@ -22,6 +23,7 @@
 
   GulpRunner.prototype.run = run;
   GulpRunner.prototype.listTasks = listTask;
+  GulpRunner.prototype.setupGulpWatch = setupGulpWatch;
   GulpRunner.prototype.setupModeTask = setupModeTask;
   GulpRunner.prototype.setupVendorTask = setupVendorTask;
   GulpRunner.prototype.setupAngularTask = setupAngularTask;
@@ -58,6 +60,11 @@
     }
 
     return tasks;
+  }
+
+  function setupGulpWatch() {
+    gulp.watch('./**/*.js', this.listTasks(this.options));
+    gulp.watch('./**/*.css', this.listTasks(this.options));
   }
 
   /**
@@ -136,7 +143,9 @@
 
     gulp.task('js-concat', function() {
       var task = gulp.src([
-          TMP_DIRECTORY + '/*.js'
+          TMP_DIRECTORY + '/vendor.js',
+          TMP_DIRECTORY + '/angular-modules.js',
+          TMP_DIRECTORY + '/angular-templates.js'
         ])
         .pipe(concat('app.js'))
       ;
