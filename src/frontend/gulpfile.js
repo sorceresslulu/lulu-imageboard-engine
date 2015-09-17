@@ -5,7 +5,7 @@
   var templateCache = require('gulp-angular-templatecache');
   var uglify = require('gulp-uglify');
 
-  var ASSETS_DIRECTORY = './../www/public/assets/';
+  var ASSETS_DIRECTORY = './../www/imageboard/public/assets/';
   var TMP_DIRECTORY = './tmp/';
 
   function GulpRunner() {

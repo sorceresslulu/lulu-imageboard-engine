@@ -1,0 +1,9 @@
+BACKLOG.TXT
+===========
+
+[ ] FEATURE0009: swagger
+[ ] FEATURE0010: Threads / Domain
+[ ] FEATURE0011: Threads / ThreadRestService
+[ ] FEATURE0012: Threads / By Ids
+[ ] FEATURE0013: Threads / By Item
+[ ] BUG0001: gulp requires 2 execution to make app.js

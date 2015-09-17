@@ -1,4 +1,0 @@
-BUGS.TXT
-=======
-
-[ ] gulp requires 2 execution to make app.js
