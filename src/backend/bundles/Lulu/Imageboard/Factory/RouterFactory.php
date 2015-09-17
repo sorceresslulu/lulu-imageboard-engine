@@ -1,11 +1,10 @@
 <?php
 namespace Lulu\Imageboard\Factory;
 
+use Lulu\Imageboard\REST\RESTServiceInterface;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-
 use League\Route\RouteCollection;
-use Lulu\Imageboard\REST\Board\BoardRESTService;
 
 class RouterFactory implements FactoryInterface
 {
@@ -26,8 +25,15 @@ class RouterFactory implements FactoryInterface
      * @param RouteCollection $router
      */
     private function setupBoardRestService(ServiceLocatorInterface $serviceLocator, RouteCollection $router) {
-        /** @var BoardRESTService $boardRESTService */
-        $boardRESTService = $serviceLocator->get('Lulu\Imageboard\REST\Board\BoardRESTService');
-        $boardRESTService->initRoutes($router);
+        $restServices = [
+            'Board\BoardRESTService',
+            'Thread\ThreadRESTService',
+        ];
+
+        foreach($restServices as $restServiceName) {
+            /** @var RESTServiceInterface $restService */
+            $restService = $serviceLocator->get('Lulu\Imageboard\REST\\'.$restServiceName);
+            $restService->initRoutes($router);
+        }
     }
 }

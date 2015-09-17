@@ -3,9 +3,9 @@ namespace Lulu\Imageboard\Repository\Mongo;
 
 use Lulu\Imageboard\Domain\Board\Board;
 use Lulu\Imageboard\Domain\Board\BoardList;
-use Lulu\Imageboard\Domain\Board\RepositoryInterface;
+use Lulu\Imageboard\Domain\Board\BoardRepositoryInterface;
 
-class BoardRepository implements RepositoryInterface
+class BoardRepository implements BoardRepositoryInterface
 {
     /**
      * Boards Mongo Collection

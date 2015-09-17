@@ -1,12 +1,12 @@
 <?php
-namespace Lulu\Imageboard\Factory\REST\Board;
+namespace Lulu\Imageboard\Factory\Repository\Mongo\BoardRepository;
 
 use Lulu\Imageboard\Repository\Mongo\BoardRepository;
-use Lulu\Imageboard\REST\Board\BoardRESTService;
+use Lulu\Imageboard\Repository\Mongo\BoardRepository\Factory\BoardPrototypeFactory;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class BoardRESTServiceFactory implements FactoryInterface
+class BoardPrototypeFactoryFactory implements FactoryInterface
 {
     /**
      * @inheritDoc
@@ -15,6 +15,6 @@ class BoardRESTServiceFactory implements FactoryInterface
         /** @var BoardRepository $boardRepository */
         $boardRepository = $serviceLocator->get('Lulu\Imageboard\Domain\Board\BoardRepository');
 
-        return new BoardRESTService($boardRepository);
+        return new BoardPrototypeFactory($boardRepository);
     }
 }

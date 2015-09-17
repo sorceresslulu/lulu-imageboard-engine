@@ -5,7 +5,10 @@ return [
             'Lulu\Imageboard\Adapter\Mongo\MongoClient' => 'Lulu\Imageboard\Factory\Adapter\Mongo\MongoClientFactory',
             'Lulu\Imageboard\Adapter\Mongo\MongoDB' => 'Lulu\Imageboard\Factory\Adapter\Mongo\MongoDBFactory',
             'Lulu\Imageboard\Adapter\Mongo\Collection\BoardCollection' => 'Lulu\Imageboard\Factory\Adapter\Mongo\Collection\BoardCollectionFactory',
-            'Lulu\Imageboard\Domain\Board\Repository' => 'Lulu\Imageboard\Factory\Repository\Mongo\BoardRepositoryFactory'
+            'Lulu\Imageboard\Adapter\Mongo\Collection\ThreadCollection' => 'Lulu\Imageboard\Factory\Adapter\Mongo\Collection\ThreadCollectionFactory',
+            'Lulu\Imageboard\Domain\Board\BoardRepository' => 'Lulu\Imageboard\Factory\Repository\Mongo\BoardRepositoryFactory',
+            'Lulu\Imageboard\Domain\Board\BoardRepository\BoardPrototypeFactory' => 'Lulu\Imageboard\Factory\Repository\Mongo\BoardRepository\BoardPrototypeFactoryFactory',
+            'Lulu\Imageboard\Domain\Thread\ThreadRepository' => 'Lulu\Imageboard\Factory\Repository\Mongo\ThreadRepositoryFactory',
         ]
     ]
 ];

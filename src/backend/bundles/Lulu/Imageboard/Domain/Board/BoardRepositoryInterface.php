@@ -1,7 +1,7 @@
 <?php
 namespace Lulu\Imageboard\Domain\Board;
 
-interface RepositoryInterface
+interface BoardRepositoryInterface
 {
     /**
      * Returns board by Id
