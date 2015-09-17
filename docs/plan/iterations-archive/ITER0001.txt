@@ -1,7 +1,7 @@
 ITERATION-0001
 ==============
 
-[ ] FEATURE0009: swagger
+[x] FEATURE0009: swagger
 [x] FEATURE0010: Threads / Domain
 [x] FEATURE0011: Threads / ThreadRestService
 [x] FEATURE0012: Threads / By Id
