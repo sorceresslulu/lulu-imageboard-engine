@@ -6,5 +6,5 @@ ITERATION-0001
 [x] FEATURE0011: Threads / ThreadRestService
 [x] FEATURE0012: Threads / By Id
 [x] FEATURE0013: Threads / By Item
-[ ] FEATURE0014: Threads / By Ids
-[ ] FEATURE0015: Threads / By Board Id
+[x] FEATURE0014: Threads / By Ids
+[x] FEATURE0015: Threads / By Board Id

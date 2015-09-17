@@ -94,6 +94,26 @@ class ThreadRepository implements ThreadRepositoryInterface
     }
 
     /**
+     * @inheritDoc
+     */
+    public function getThreadsByIds(array $threadIds) {
+        $threads = [];
+
+        foreach($this->threadMongoCollection->find([
+            '_id' => [
+                '$in' => array_map(function(&$input) {
+                    return new \MongoId($input);
+                }, $threadIds)
+            ]
+        ]) as $threadBSON) {
+            $threads[] = $this->createThreadFromBSON($threadBSON);
+        }
+
+        return $threads;
+    }
+
+
+    /**
      * Create and returns thread from threadBSON
      * @param array $threadBSON
      * @return Thread
