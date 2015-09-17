@@ -1,100 +1,153 @@
 (function(require) {
-  "use strict";
-
   var gulp = require('gulp');
+  var gulpConfig = require('./gulpconfig.json');
   var concat = require('gulp-concat');
   var templateCache = require('gulp-angular-templatecache');
   var uglify = require('gulp-uglify');
 
-  var MINIFY = true;
-  var ASSETS_DIRECTORY = '../www/public/assets';
-  var TMP_DIRECTORY = './tmp';
+  var ASSETS_DIRECTORY = './../www/public/assets/';
+  var TMP_DIRECTORY = './tmp/';
 
-  var tasks = [
-    'vendor',
-    'angular-modules',
-    'angular-templates',
-    'concat-js'
-  ];
+  function GulpRunner() {
+    this.gulpConfig = gulpConfig;
+    this.options = {
+      minify: true
+    };
 
-  var tasksProduction = tasks.slice(0);
-      tasksProduction.unshift('mode-production');
+    this.setupModeTask();
+    this.setupVendorTask();
+    this.setupAngularTask();
+    this.setupJsConcatTask();
+  }
 
-  var tasksDevelopment = tasks.slice(0);
-      tasksDevelopment.unshift('mode-development');
+  GulpRunner.prototype.run = run;
+  GulpRunner.prototype.listTasks = listTask;
+  GulpRunner.prototype.setupModeTask = setupModeTask;
+  GulpRunner.prototype.setupVendorTask = setupVendorTask;
+  GulpRunner.prototype.setupAngularTask = setupAngularTask;
+  GulpRunner.prototype.setupJsConcatTask = setupJsConcatTask;
 
-  gulp.task('default', tasksProduction);
-  gulp.task('development', tasksDevelopment);
+  return (new GulpRunner()).run();
 
-  gulp.task('mode-production', function() {
-    MINIFY = true;
-  });
+  /**
+   * Run guklp
+   */
+  function run() {
+    gulp.task('default', ['production']);
+    gulp.task('production', this.listTasks({ minify: true }));
+    gulp.task('development', this.listTasks({ minify: false }));
+  }
 
-  gulp.task('mode-development', function() {
-    MINIFY = false;
-  });
-
-  gulp.task('vendor', function() {
-    var src = [
-      'bower_components/sprintf/dist/sprintf.min.js'
+  /**
+   * Returns list of tasks
+   * @param options
+   * @returns {string[]}
+   */
+  function listTask(options) {
+    var tasks = [
+      "vendor",
+      "angular-modules",
+      "angular-templates",
+      "js-concat"
     ];
 
-    return gulp.src(src)
-      .pipe(concat('vendor.js'))
-      .pipe(gulp.dest(TMP_DIRECTORY))
-    ;
-  });
-
-  gulp.task('angular-modules', function() {
-    var modules = [
-      'main',
-      'board'
-    ];
-
-    var src = MINIFY
-      ? [
-      'bower_components/angular/angular.min.js',
-      'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-      'bower_components/sprintf/dist/angular-sprintf.min.js'
-    ] : [
-      'bower_components/angular/angular.js',
-      'bower_components/angular-ui-router/release/angular-ui-router.js',
-      'bower_components/sprintf/dist/angular-sprintf.js'
-    ];
-
-    modules.forEach(function(module) {
-      src.push('angular/modules/'+module+'/**/*.js');
-    });
-
-    return gulp.src(src)
-      .pipe(concat('angular-modules.js'))
-      .pipe(gulp.dest(TMP_DIRECTORY))
-    ;
-  });
-
-  gulp.task('angular-templates', function() {
-    return gulp.src('angular/**/template.html')
-      .pipe(templateCache())
-      .pipe(concat('angular-templates.js'))
-      .pipe(gulp.dest(TMP_DIRECTORY))
-    ;
-  });
-
-  gulp.task('concat-js', function() {
-    var task = gulp.src([
-        TMP_DIRECTORY + '/**/vendor.js',
-        TMP_DIRECTORY + '/**/angular-modules.js',
-        TMP_DIRECTORY + '/**/angular-templates.js'
-    ])
-      .pipe(concat('app.js'))
-    ;
-
-    if(MINIFY) {
-      task.pipe(uglify());
+    if(options.minify) {
+      tasks.unshift('mode-production');
+    }else{
+      tasks.unshift('mode-development');
     }
 
-    task.pipe(gulp.dest(ASSETS_DIRECTORY));
+    return tasks;
+  }
 
-    return task
-  });
+  /**
+   * Production/development mode
+   */
+  function setupModeTask() {
+    var runner = this;
+
+    gulp.task('mode-development', function() {
+      runner.options.minify = true;
+    });
+
+    gulp.task('mode-production', function() {
+      runner.options.minify = false
+    });
+  }
+
+  /**
+   * Vendor libs
+   */
+  function setupVendorTask() {
+    var src;
+
+    if(this.options.minify) {
+      src = this.gulpConfig.vendor.production;
+    }else{
+      src = this.gulpConfig.vendor.development;
+    }
+
+    gulp.task('vendor', function() {
+      return gulp.src(src)
+        .pipe(concat('vendor.js'))
+        .pipe(gulp.dest(TMP_DIRECTORY))
+    });
+  }
+
+  /**
+   * Angular modules & templates
+   */
+  function setupAngularTask() {
+    var config;
+
+    if(this.options.minify) {
+      config = this.gulpConfig.angular.production;
+    }else{
+      config = this.gulpConfig.angular.development;
+    }
+
+    gulp.task('angular-modules', function() {
+      var src = [];
+
+      config.modules.forEach(function(module) {
+        src.push('angular/modules/'+module+'/**/*.js');
+      });
+
+      return gulp.src(src)
+        .pipe(concat('angular-modules.js'))
+        .pipe(gulp.dest(TMP_DIRECTORY))
+      ;
+    });
+
+    gulp.task('angular-templates', function() {
+      return gulp.src('angular/**/template.html')
+        .pipe(templateCache())
+        .pipe(concat('angular-templates.js'))
+        .pipe(gulp.dest(TMP_DIRECTORY))
+      ;
+    });
+  }
+
+  /**
+   * Concat all JS files to app.js
+   */
+  function setupJsConcatTask() {
+    var runner = this;
+
+    gulp.task('js-concat', function() {
+      var task = gulp.src([
+          TMP_DIRECTORY + '/*.js'
+        ])
+        .pipe(concat('app.js'))
+      ;
+
+      if(runner.options.minify) {
+        task.pipe(uglify());
+      }
+
+      task.pipe(gulp.dest(ASSETS_DIRECTORY));
+
+      return task
+    });
+  }
 })(require);

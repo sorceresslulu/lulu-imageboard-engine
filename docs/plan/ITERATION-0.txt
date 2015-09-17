@@ -8,3 +8,4 @@ ITERATION-0
 [x] FEAT00005: REST / Boards / List
 [x] FEAT00006: REST / Boards / By Id
 [x] FEAT00007: setup frontend (gulp/bower/etc)
+[x] FEAT00008: setup gulp

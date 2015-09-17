@@ -1,0 +1,30 @@
+{
+  "angular": {
+    "production": {
+      "modules": [
+        "main",
+        "board"
+      ]
+    },
+    "development": {
+      "modules": [
+        "main",
+        "board"
+      ]
+    }
+  },
+  "vendor": {
+    "production": [
+      "bower_components/angular/angular.min.js",
+      "bower_components/angular-ui-router/release/angular-ui-router.min.js",
+      "bower_components/sprintf/dist/sprintf.min.js",
+      "bower_components/sprintf/dist/angular-sprintf.min.js"
+    ],
+    "development": [
+      "bower_components/angular/angular.js",
+      "bower_components/angular-ui-router/release/angular-ui-router.js",
+      "bower_components/sprintf/dist/sprintf.js",
+      "bower_components/sprintf/dist/angular-sprintf.js"
+    ]
+  }
+}
