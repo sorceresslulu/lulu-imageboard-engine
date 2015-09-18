@@ -3,6 +3,7 @@
     "production": {
       "modules": [
         "main",
+        "post",
         "thread",
         "board"
       ]
@@ -10,6 +11,7 @@
     "development": {
       "modules": [
         "main",
+        "post",
         "thread",
         "board"
       ]

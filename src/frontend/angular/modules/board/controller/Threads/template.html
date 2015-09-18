@@ -3,10 +3,15 @@
     <h1>{{board.title}}</h1>
     <p>{{board.description}}</p>
   </header>
+  <div class="thread-create-form-container">
+    <create-new-thread-form board-id="board.id"></create-new-thread-form>
+  </div>
   <div class="threads-list">
     <ul>
       <li ng-repeat="thread in threads">
         ThreadId: {{thread.id}}
+
+        <a ng-href="/thread/view/{{thread.id}}/">[View thread]</a>
       </li>
     </ul>
   </div>
