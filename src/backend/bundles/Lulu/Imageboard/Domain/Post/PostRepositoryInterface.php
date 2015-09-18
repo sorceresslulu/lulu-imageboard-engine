@@ -47,4 +47,16 @@ interface PostRepositoryInterface
      * @return PostList
      */
     public function getPostsByIds(array $ids);
+
+    /**
+     * Save new post
+     * @param Post $post
+     */
+    public function createPost(Post $post);
+
+    /**
+     * Update post
+     * @param Post $post
+     */
+    public function updatePost(Post $post);
 }

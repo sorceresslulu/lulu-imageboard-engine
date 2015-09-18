@@ -3,4 +3,13 @@
     <h1>View Thread</h1>
     <p>ThreadId: <span>{{threadId}}</span></p>
   </header>
+  <div ng-switch="ready.toString()">
+    <div ng-switch-when="false">
+      Loading...
+    </div>
+    <div ng-switch-when="true">
+      <li-thread-feed thread-feed="threadFeed"></li-thread-feed>
+      <li-reply-form thread-feed="threadFeed" thread-id="threadId"></li-reply-form>
+    </div>
+  </div>
 </article>

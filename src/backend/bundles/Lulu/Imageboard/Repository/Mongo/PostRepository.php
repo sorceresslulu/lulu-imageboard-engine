@@ -120,17 +120,52 @@ class PostRepository implements PostRepositoryInterface
         return new PostList($posts);
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function createPost(Post $post) {
+        $postBSON = $this->convertPostToBSON($post);
+        $postBSON['_id'] = new \MongoId();
+
+        $this->postsMongoCollection->insert($this->convertPostToBSON($post));
+
+        $post->defineId($postBSON['_id']);
+    }
 
     /**
-     * It should be somewhere else
+     * @inheritDoc
+     */
+    public function updatePost(Post $post) {
+        throw new \Exception('Not implemented');
+    }
+
+    /**
+     * Converts BSON to Post
      * @param array $postBSON
      * @return Post
      */
     private function convertBSONToPost(array $postBSON) {
-        return new Post(
-            $postBSON['_id'],
-            $postBSON['thread_id'],
-            $postBSON['content']
-        );
+        $post = new Post($postBSON['_id']);
+        $post->setThreadId($postBSON['thread_id'])
+             ->setAuthor($postBSON['author'])
+             ->setEmail($postBSON['email'])
+             ->setContent($postBSON['content'])
+        ;
+
+        return $post;
+    }
+
+    /**
+     * Converts Post to BSON
+     * @param Post $post
+     * @return array
+     */
+    private function convertPostToBSON(Post $post) {
+        return [
+            'thread_id' => $post->getThreadId(),
+            'author' => $post->getAuthor(),
+            'email' => $post->getEmail(),
+            'content' => $post->getContent(),
+        ];
     }
 }

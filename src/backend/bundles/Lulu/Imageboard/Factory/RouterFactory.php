@@ -28,6 +28,7 @@ class RouterFactory implements FactoryInterface
         $restServices = [
             'Board\BoardRESTService',
             'Thread\ThreadRESTService',
+            'Thread\ThreadFeedRESTService',
             'Post\PostRESTService',
         ];
 

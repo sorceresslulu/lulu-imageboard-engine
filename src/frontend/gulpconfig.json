@@ -3,17 +3,17 @@
     "production": {
       "modules": [
         "main",
-        "post",
+        "board",
         "thread",
-        "board"
+        "post"
       ]
     },
     "development": {
       "modules": [
         "main",
-        "post",
+        "board",
         "thread",
-        "board"
+        "post"
       ]
     }
   },

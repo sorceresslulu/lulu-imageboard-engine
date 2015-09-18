@@ -120,7 +120,9 @@
     }
 
     gulp.task('angular-modules', function() {
-      var src = [];
+      var src = [
+        'angular/modules/Module.js'
+      ];
 
       config.modules.forEach(function(module) {
         src.push('angular/modules/'+module+'/**/*.js');
@@ -157,7 +159,7 @@
       ;
 
       if(runner.options.minify) {
-        task.pipe(uglify());
+        // task.pipe(uglify());
       }
 
       task.pipe(gulp.dest(ASSETS_DIRECTORY));

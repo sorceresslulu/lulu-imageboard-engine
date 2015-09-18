@@ -1,7 +1,7 @@
 (function(angular) {
   angular
-    .module('thread')
-    .directive('createNewThreadForm', factory)
+    .module('lulu-imageboard')
+    .directive('liCreateNewThreadForm', factory)
   ;
 
   function factory() {

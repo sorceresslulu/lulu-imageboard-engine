@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module('board')
+    .module('lulu-imageboard')
     .controller('BoardIndexController', factory)
   ;
 

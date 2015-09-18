@@ -2,11 +2,7 @@
   "use strict";
 
   angular
-    .module('board', [
-      'thread',
-      'ui.router',
-      'ngResource'
-    ])
+    .module('lulu-imageboard')
     .config(['$stateProvider', RouterConfig])
   ;
 

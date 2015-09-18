@@ -2,9 +2,7 @@
   "use strict";
 
   angular
-    .module('post', [
-      'ngResource'
-    ])
+    .module('lulu-imageboard')
     .config(RouterConfig)
   ;
 

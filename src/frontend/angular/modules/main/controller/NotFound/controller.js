@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module('main')
+    .module('lulu-imageboard')
     .controller('MainNotFoundController', factory)
   ;
 

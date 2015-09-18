@@ -1,6 +1,6 @@
 (function(angular) {
   angular
-    .module('main')
+    .module('lulu-imageboard')
     .controller('MainIndexController', factory)
   ;
 

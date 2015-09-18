@@ -2,7 +2,7 @@
   "use strict";
 
   angular
-    .module('post')
+    .module('lulu-imageboard')
     .factory('PostRestResource', factory)
   ;
 
@@ -12,13 +12,15 @@
     var
       indexResource = $resource('/backend/rest/post/:postId', { 'postId': '@id' }),
       byIdsResource = $resource('/backend/rest/post/by-ids/:postIds', { 'postIds': '@id' }),
-      byThreadIdResource =  $resource('/backend/rest/post/by-thread/:threadId', { 'threadId': '@id' })
+      byThreadIdResource =  $resource('/backend/rest/post/by-thread/:threadId', { 'threadId': '@id' }),
+      createResource = $resource('/backend/rest/post/create/:threadId', { 'threadId': '@id' })
     ;
 
     return {
       index: indexResource,
       byIds: byIdsResource,
-      byThreadId: byThreadIdResource
+      byThreadId: byThreadIdResource,
+      create: createResource
     };
   }
-});
+})(angular);

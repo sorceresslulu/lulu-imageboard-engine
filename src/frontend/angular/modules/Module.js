@@ -1,7 +1,9 @@
 (function(angular) {
   angular
     .module('lulu-imageboard', [
-      'ngResource'
+      'ngResource',
+      'ui.router',
+      'templates'
     ])
   ;
 })(angular);

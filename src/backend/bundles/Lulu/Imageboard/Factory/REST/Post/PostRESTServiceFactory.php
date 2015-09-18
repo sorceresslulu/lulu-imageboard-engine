@@ -12,7 +12,7 @@ class PostRESTServiceFactory implements FactoryInterface
      * @inheritDoc
      */
     public function createService(ServiceLocatorInterface $serviceLocator) {
-        /** @var PostRepositoryInterface $boardRepository */
+        /** @var PostRepositoryInterface $postRepository */
         $postRepository = $serviceLocator->get('Lulu\Imageboard\Domain\Post\PostRepository');
 
         return new PostRESTService($postRepository);

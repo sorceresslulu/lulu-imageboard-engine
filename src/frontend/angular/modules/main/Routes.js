@@ -4,11 +4,7 @@
   angular.module('templates', []);
 
   angular
-    .module('main', [
-      'ui.router',
-      'templates',
-      'board'
-    ])
+    .module('lulu-imageboard')
     .config(RouterConfig)
   ;
 

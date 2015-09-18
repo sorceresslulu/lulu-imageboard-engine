@@ -1,6 +1,6 @@
 (function(angular) {
   angular
-    .module('thread')
+    .module('lulu-imageboard')
     .factory('ThreadRestResource', factory)
   ;
 
@@ -9,12 +9,16 @@
   function factory($resource) {
     var
       indexResource = $resource('/backend/rest/thread/:threadId', { 'threadId': '@id' }),
-      byBoardResource = $resource('/backend/rest/thread/by-board/:boardId', { 'boardId': '@id' })
+      byBoardResource = $resource('/backend/rest/thread/by-board/:boardId', { 'boardId': '@id' }),
+      feedResource = $resource('/backend/rest/thread/feed/:threadId', { 'threadId': '@id' }, {
+        query: { isArray: false }
+      })
     ;
 
     return {
       index: indexResource,
-      byBoard: byBoardResource
+      byBoard: byBoardResource,
+      feed: feedResource
     };
   }
 })(angular);

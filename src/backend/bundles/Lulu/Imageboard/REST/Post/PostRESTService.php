@@ -4,6 +4,8 @@ namespace Lulu\Imageboard\REST\Post;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
+use Lulu\Imageboard\REST\Post\Formatter\PostFormatter;
+use Lulu\Imageboard\REST\Post\Formatter\PostFormatterInterface;
 use Lulu\Imageboard\Domain\Post\Post;
 use Lulu\Imageboard\Domain\Post\PostRepositoryInterface;
 use Lulu\Imageboard\REST\RESTServiceInterface;
@@ -23,11 +25,18 @@ class PostRESTService implements RESTServiceInterface
     private $postRepository;
 
     /**
+     * Post formatter
+     * @var PostFormatterInterface
+     */
+    private $postFormatter;
+
+    /**
      * PostRESTService constructor.
      * @param PostRepositoryInterface $postRepository
      */
     public function __construct(PostRepositoryInterface $postRepository) {
         $this->postRepository = $postRepository;
+        $this->postFormatter = new PostFormatter();
     }
 
     /**
@@ -38,6 +47,7 @@ class PostRESTService implements RESTServiceInterface
         $this->routeGetById($routes);
         $this->routeGetByIds($routes);
         $this->routeGetByThreadId($routes);
+        $this->putPost($routes);
     }
 
     /**
@@ -46,11 +56,26 @@ class PostRESTService implements RESTServiceInterface
      * @return array
      */
     private function postToJSON(Post $post) {
-        return [
-            'id' => $post->getId(),
-            'thread_id' => $post->getThreadId(),
-            'content' => $post->getContent()
-        ];
+        return $this->postFormatter->format($post);
+    }
+
+    /**
+     * Create post from request
+     * @param $threadId
+     * @param Request $request
+     * @return Post
+     */
+    private function createPostFromRequest($threadId, Request $request) {
+        $angularRequest = json_decode($request->getContent(), true);
+
+        $post = new Post();
+        $post->setThreadId(new \MongoId($threadId))
+             ->setEmail($angularRequest['email'])
+             ->setAuthor($angularRequest['author'])
+             ->setContent($angularRequest['content'])
+        ;
+
+        return $post;
     }
 
     /**
@@ -125,6 +150,19 @@ class PostRESTService implements RESTServiceInterface
             }
 
             return new Ok($jsonResponse);
+        });
+    }
+
+    /**
+     * Route – PutPost
+     * @param RouteCollection $routes
+     */
+    public function putPost(RouteCollection $routes) {
+        $routes->post('/backend/rest/post/create/{threadId}', function (Request $request, Response $response, array $args) {
+            $post = $this->createPostFromRequest($args['threadId'], $request);
+            $this->postRepository->createPost($post);
+
+            return new Ok($this->postToJSON($post));
         });
     }
 }
