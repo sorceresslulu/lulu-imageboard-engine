@@ -9,6 +9,8 @@
 
     }
 
+    CreateNewThreadForm.prototype.reset = reset;
+
     return {
       replace: true,
       restrict: 'E',
@@ -16,6 +18,10 @@
       scope: {
         boardId: '='
       }
+    };
+
+    function reset() {
+
     }
   }
 })(angular);

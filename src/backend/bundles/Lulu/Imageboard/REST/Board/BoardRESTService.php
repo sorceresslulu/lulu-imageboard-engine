@@ -30,26 +30,9 @@ class BoardRESTService implements RESTServiceInterface
      * @inheritdoc
      */
     public function initRoutes(RouteCollection $routes) {
-        $routes->get('/backend/rest/board', function () {
-            $jsonResponse = [];
+        $this->routeGetAll($routes);
 
-            /** @var Board $board */
-            foreach ($this->boardRepository->getAllBoards()->getBoards() as $board) {
-                $jsonResponse[] = $this->boardToJSON($board);
-            }
-
-            return new Ok($jsonResponse);
-        });
-
-        $routes->get('/backend/rest/board/{id}', function (Request $request, Response $response, array $args) {
-            try {
-                $board = $this->boardRepository->getBoardById($args['id']);
-            } catch (\OutOfBoundsException $e) {
-                throw new NotFoundException($e->getMessage());
-            }
-
-            return new Ok($this->boardToJSON($board));
-        });
+        $this->routeGetById($routes);
     }
 
     /**
@@ -64,5 +47,38 @@ class BoardRESTService implements RESTServiceInterface
             'title' => $board->getTitle(),
             'description' => $board->getDescription()
         ];
+    }
+
+    /**
+     * Route – GetAll
+     * @param RouteCollection $routes
+     */
+    public function routeGetAll(RouteCollection $routes) {
+        $routes->get('/backend/rest/board', function () {
+            $jsonResponse = [];
+
+            /** @var Board $board */
+            foreach ($this->boardRepository->getAllBoards()->getBoards() as $board) {
+                $jsonResponse[] = $this->boardToJSON($board);
+            }
+
+            return new Ok($jsonResponse);
+        });
+    }
+
+    /**
+     * Route – GetById
+     * @param RouteCollection $routes
+     */
+    public function routeGetById(RouteCollection $routes) {
+        $routes->get('/backend/rest/board/{id}', function (Request $request, Response $response, array $args) {
+            try {
+                $board = $this->boardRepository->getBoardById($args['id']);
+            } catch (\OutOfBoundsException $e) {
+                throw new NotFoundException($e->getMessage());
+            }
+
+            return new Ok($this->boardToJSON($board));
+        });
     }
 }

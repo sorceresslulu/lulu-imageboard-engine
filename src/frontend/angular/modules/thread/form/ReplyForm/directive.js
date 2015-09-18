@@ -4,21 +4,26 @@
     .directive('liReplyForm', factory)
   ;
 
-  factory.$inject = ['PostService'];
+  factory.$inject = ['PostService', 'PostFormService'];
 
-  function factory(PostService) {
+  function factory(PostService, PostFormService) {
     LiReplyForm.$inject = ['$scope'];
 
     function LiReplyForm($scope) {
       this.threadId = $scope.threadId;
       this.threadFeed = $scope.threadFeed;
-      this.reset();
-      this.setupScope($scope);
+      this.postFormService = PostFormService.create();
+
+      (function setupScope($scope, controller) {
+        $scope.postFormService = controller.postFormService;
+
+        $scope.submit = function($event) {
+          controller.submit($event);
+        }
+      })($scope, this);
     }
 
     LiReplyForm.prototype.submit = submit;
-    LiReplyForm.prototype.setupScope = setupScope;
-    LiReplyForm.prototype.reset = reset;
 
     return {
       replace: true,
@@ -32,32 +37,6 @@
     };
 
     /**
-     * Setup scope
-     * (Robert Martin completely dislikes *doc like this one)
-     */
-    function setupScope($scope) {
-      var controller = this;
-
-      $scope.formData = this.formData;
-
-      $scope.submit = function($event) {
-        controller.submit($event);
-      }
-    }
-
-    /**
-     * Reset form
-     */
-    function reset() {
-      this.formData = {
-        threadId: this.threadId,
-        author: '',
-        email: '',
-        content: ''
-      };
-    }
-
-    /**
      * Submit form
      * (Robert Martin completely dislikes *doc like this one)
      */
@@ -66,8 +45,7 @@
 
       $event.preventDefault();
 
-      PostService.createPost(this.threadId, this.formData).then(function(data) {
-        console.log(data);
+      PostService.createPost(this.threadId, this.postFormService.getFormData()).then(function(data) {
         directive.threadFeed.pushPost(data);
 
         return data;
