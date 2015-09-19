@@ -12,13 +12,15 @@
       byBoardResource = $resource('/backend/rest/thread/by-board/:boardId', { 'boardId': '@id' }),
       feedResource = $resource('/backend/rest/thread/feed/:threadId', { 'threadId': '@id' }, {
         query: { isArray: false }
-      })
+      }),
+      createNewThreadResource = $resource('/backend/rest/thread/create/:boardId', { 'boardId': '@id' })
     ;
 
     return {
       index: indexResource,
       byBoard: byBoardResource,
-      feed: feedResource
+      feed: feedResource,
+      create: createNewThreadResource
     };
   }
 })(angular);

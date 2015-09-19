@@ -8,6 +8,7 @@ use Lulu\Imageboard\REST\Post\Formatter\PostFormatter;
 use Lulu\Imageboard\REST\Post\Formatter\PostFormatterInterface;
 use Lulu\Imageboard\Domain\Post\Post;
 use Lulu\Imageboard\Domain\Post\PostRepositoryInterface;
+use Lulu\Imageboard\REST\Post\Util\CreatePostFromRequest;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Lulu\Imageboard\Util\Seek\SeekFromRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -67,15 +68,9 @@ class PostRESTService implements RESTServiceInterface
      */
     private function createPostFromRequest($threadId, Request $request) {
         $angularRequest = json_decode($request->getContent(), true);
+        $createPostFromRequest = new CreatePostFromRequest();
 
-        $post = new Post();
-        $post->setThreadId(new \MongoId($threadId))
-             ->setEmail($angularRequest['email'])
-             ->setAuthor($angularRequest['author'])
-             ->setContent($angularRequest['content'])
-        ;
-
-        return $post;
+        return $createPostFromRequest->createPostFromRequest($threadId, $angularRequest);
     }
 
     /**

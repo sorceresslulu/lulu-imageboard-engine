@@ -10,10 +10,23 @@
     function ThreadService() {
     }
 
+    ThreadService.prototype.createNewThread = createNewThread;
     ThreadService.prototype.getThreadFeed = getThreadFeed;
     ThreadService.prototype.getThreadsByBoardId = getThreadsByBoardId;
 
     return new ThreadService();
+
+    /**
+     * Create new thread
+     * @param boardId
+     * @param post
+     * @returns {*|Function|promise|n}
+     */
+    function createNewThread(boardId, post) {
+      return ThreadRestResource.create.save({ 'boardId': boardId }, {
+        post: post
+      }).$promise;
+    }
 
     /**
      * Returns threads by board Id

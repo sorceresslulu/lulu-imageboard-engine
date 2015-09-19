@@ -6,17 +6,18 @@
     .directive('liCreateThreadForm', factory)
   ;
 
-  function factory() {
+  factory.$inject = ['PostFormService', 'ThreadService'];
+
+  function factory(PostFormService, ThreadService) {
     CreateThreadForm.$inject = ['$scope'];
 
     function CreateThreadForm($scope) {
-      this.formData = {
-
-      };
+      this.boardId = $scope.boardId;
+      this.postFormService = PostFormService.create();
 
       (function setupScope(directive) {
-        $scope.submit = directive.submit();
-        $scope.formData = directive.formData;
+        $scope.submit = directive.submit;
+        $scope.postFormService = directive.postFormService;
       })(this);
     }
 
@@ -26,11 +27,26 @@
       replace: true,
       restrict: 'E',
       controller: CreateThreadForm,
-      templateUrl: 'modules/thread/form/CreateThreadForm'
+      templateUrl: 'modules/thread/form/CreateThreadForm/template.html',
+      scope: {
+        boardId: '='
+      }
     };
 
+    /**
+     * Submit / Create New Thread action
+     * @param $event
+     */
     function submit($event) {
       $event.preventDefault();
+
+      var promise = ThreadService.createNewThread(this.boardId, this.postFormService.getFormData());
+
+      promise.then(function(thread) {
+        console.log(thread);
+
+        return thread;
+      });
     }
   }
 })(angular);

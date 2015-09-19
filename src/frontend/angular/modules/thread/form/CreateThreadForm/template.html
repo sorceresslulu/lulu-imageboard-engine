@@ -1,5 +1,8 @@
-<form action="#" ng-submit="submit()">
-  <li-post-form form-data="formData"></li-post-form>
+<form action="#" ng-submit="submit($event)">
+  <header>
+    <h1>Create new thread</h1>
+  </header>
+  <li-post-form post-form-service="postFormService"></li-post-form>
   <footer>
     <input type="submit" value="Create thread">
   </footer>

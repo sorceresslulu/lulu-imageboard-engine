@@ -2,6 +2,7 @@
 namespace Lulu\Imageboard\Domain\Thread;
 
 use Lulu\Imageboard\Domain\Board\Board;
+use Lulu\Imageboard\Domain\Post\Post;
 use Lulu\Imageboard\Util\Seek\SeekableInterface;
 
 interface ThreadRepositoryInterface
@@ -42,4 +43,12 @@ interface ThreadRepositoryInterface
      * @return Thread[]
      */
     public function getThreadsByIds(array $threadIds);
+
+    /**
+     * Create new thread
+     * @param $boardId
+     * @param Post $post
+     * @return Thread
+     */
+    public function createNewThread($boardId, Post $post);
 }

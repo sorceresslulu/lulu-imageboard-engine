@@ -1,45 +1,69 @@
 <?php
 namespace Lulu\Imageboard\Domain\Thread;
 
-use Lulu\Imageboard\Domain\Board\Board;
+use Lulu\Imageboard\Util\DateMarks;
+use Lulu\Imageboard\Util\Id;
 
 class Thread
 {
     /**
      * Thread Id
-     * @var mixed
+     * @var Id
      */
     private $id;
 
     /**
-     *
-     * @var Board
+     * Board Id
+     * @var Id
      */
-    private $board;
+    private $boardId;
+
+    /**
+     * Date marks
+     * @var DateMarks
+     */
+    private $dateMarks;
 
     /**
      * Thread constructor.
-     * @param mixed $id
-     * @param Board $board
+     * @param Id $id
+     * @param Id $boardId
      */
-    public function __construct($id, Board $board) {
+    public function __construct(Id $id = null, Id $boardId = null) {
+        if($id === null) {
+            $id = new Id();
+        }
+
+        if($boardId === null) {
+            $boardId = new Id();
+        }
+
         $this->id = $id;
-        $this->board = $board;
+        $this->boardId = $boardId;
+        $this->dateMarks = new DateMarks();
     }
 
     /**
-     * Returns thread Id
-     * @return mixed
+     * Returns Id
+     * @return Id
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Returns board
-     * @return Board
+     * Returns Board Id
+     * @return Id
      */
-    public function getBoard() {
-        return $this->board;
+    public function getBoardId() {
+        return $this->boardId;
+    }
+
+    /**
+     * Returns Date Marks
+     * @return DateMarks
+     */
+    public function getDateMarks() {
+        return $this->dateMarks;
     }
 }

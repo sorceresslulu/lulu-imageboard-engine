@@ -2,9 +2,11 @@
 namespace Lulu\Imageboard\Repository\Mongo;
 
 use Lulu\Imageboard\Domain\Board\Board;
-use Lulu\Imageboard\Domain\Thread\Factory\BoardPrototypeFactoryInterface;
+use Lulu\Imageboard\Domain\Post\Post;
+use Lulu\Imageboard\Domain\Post\PostRepositoryInterface;
 use Lulu\Imageboard\Domain\Thread\Thread;
 use Lulu\Imageboard\Domain\Thread\ThreadRepositoryInterface;
+use Lulu\Imageboard\Util\Id;
 use Lulu\Imageboard\Util\Seek\SeekableInterface;
 
 class ThreadRepository implements ThreadRepositoryInterface
@@ -16,19 +18,19 @@ class ThreadRepository implements ThreadRepositoryInterface
     private $threadMongoCollection;
 
     /**
-     * Board prototype factory
-     * @var BoardPrototypeFactoryInterface
+     * Post Repository
+     * @var PostRepositoryInterface
      */
-    private $boardPrototypeFactory;
+    private $postRepository;
 
     /**
      * ThreadRepository constructor.
      * @param \MongoCollection $threadMongoCollection
-     * @param BoardPrototypeFactoryInterface $boardPrototypeFactory
+     * @param PostRepositoryInterface $postRepository
      */
-    public function __construct(\MongoCollection $threadMongoCollection, BoardPrototypeFactoryInterface $boardPrototypeFactory) {
+    public function __construct(\MongoCollection $threadMongoCollection, PostRepositoryInterface $postRepository) {
         $this->threadMongoCollection = $threadMongoCollection;
-        $this->boardPrototypeFactory = $boardPrototypeFactory;
+        $this->postRepository = $postRepository;
     }
 
     /**
@@ -119,9 +121,47 @@ class ThreadRepository implements ThreadRepositoryInterface
      * @return Thread
      */
     private function createThreadFromBSON(array $threadBSON) {
-        return new Thread(
-            $threadBSON['_id'],
-            $this->boardPrototypeFactory->getBoardById($threadBSON['board_id'])
-        );
+        return new Thread(new Id($threadBSON['_id']), new Id(
+            new \MongoId($threadBSON['board_id'])
+        ));
+    }
+
+    /**
+     * Create and returns Thread's BSON
+     * @param Thread $thread
+     * @return array
+     * @throws \Exception
+     */
+    private function createBSONFromThread(Thread $thread) {
+        $postBSON = [
+            '_id' => $thread->getId()->isIdDefined() ? $thread->getId() : new \MongoId(),
+            'board_id' => $thread->getBoardId()->getIdValue(),
+            'created_on' => $thread->getDateMarks()->getCreatedOn(),
+        ];
+
+        if($thread->getDateMarks()->wasUpdated()) {
+            $postBSON['updated_on'] = $thread->getDateMarks()->getUpdatedOn();
+        }
+
+        return $postBSON;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function createNewThread($boardId, Post $post) {
+        $thread = new Thread();
+        $thread->getBoardId()->defineId(new \MongoId($boardId));
+
+        $threadBSON = $this->createBSONFromThread($thread);
+        $this->threadMongoCollection->insert($threadBSON);
+
+        $thread->getId()->defineId($threadBSON['_id']);
+
+        $post->setThreadId($thread->getId()->getIdValue());
+
+        $this->postRepository->createPost($post);
+
+        return $thread;
     }
 }

@@ -7,6 +7,7 @@ use League\Route\RouteCollection;
 use Lulu\Imageboard\Domain\Thread\Thread;
 use Lulu\Imageboard\Domain\Thread\ThreadRepositoryInterface;
 use Lulu\Imageboard\Repository\Mongo\BoardRepository\Factory\BoardPrototypeFactory;
+use Lulu\Imageboard\REST\Post\Util\CreatePostFromRequest;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Lulu\Imageboard\Util\Seek\Seek;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +48,7 @@ class ThreadRESTService implements RESTServiceInterface
         $this->routeGetByBoard($routes);
         $this->routeGetByIds($routes);
         $this->routeGetById($routes);
+        $this->routeCreateThread($routes);
     }
 
     /**
@@ -136,6 +138,21 @@ class ThreadRESTService implements RESTServiceInterface
             } catch (\OutOfBoundsException $e) {
                 throw new NotFoundException($e->getMessage());
             }
+
+            return new Ok($this->convertThreadToJSON($thread));
+        });
+    }
+
+    /**
+     * @param RouteCollection $routes
+     */
+    public function routeCreateThread(RouteCollection $routes) {
+        $routes->post('/backend/rest/thread/create/{boardId}', function (Request $request, Response $response, array $args) {
+            $angularRequest = $angularRequest = json_decode($request->getContent(), true);
+            $createPostFromRequest = new CreatePostFromRequest();
+            $post = $createPostFromRequest->createPostFromRequest(null, $angularRequest['post']);
+
+            $thread = $this->threadRepository->createNewThread($args['boardId'], $post);
 
             return new Ok($this->convertThreadToJSON($thread));
         });
