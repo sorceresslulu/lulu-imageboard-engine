@@ -1,10 +1,12 @@
 <article class="board board-index">
-  <header>
-    <h1>Board list</h1>
-  </header>
-  <ul>
-    <li ng-repeat="board in boards">
-      <a ng-href="/board/{{board.url}}/">{{board.title}}</a>
-    </li>
-  </ul>
+  <div ng-if="ready">
+    <header>
+      <h1>Board list</h1>
+    </header>
+    <ul>
+      <li ng-repeat="board in boards">
+        <a ng-href="/board/{{board.url}}/">{{board.title}}</a>
+      </li>
+    </ul>
+  </div>
 </article>

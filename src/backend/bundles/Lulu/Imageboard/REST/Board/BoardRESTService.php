@@ -42,7 +42,8 @@ class BoardRESTService implements RESTServiceInterface
      */
     private function boardToJSON(Board $board) {
         return [
-            'id' => (string) $board->getId(),
+            'id' => (string) $board->getId() /** TODO:: id as ID not as (string) Id */,
+            'sId' => (string) $board->getId(),
             'url' => $board->getUrl(),
             'title' => $board->getTitle(),
             'description' => $board->getDescription()

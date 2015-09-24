@@ -13,10 +13,10 @@
         controller: 'BoardIndexController',
         templateUrl: 'modules/board/controller/Index/template.html'
       })
-      .state('board-threads', {
+      .state('board-feed', {
         url: '/board/:boardURL/',
-        controller: 'BoardThreadsController',
-        templateUrl: 'modules/board/controller/Threads/template.html'
+        controller: 'BoardFeedController',
+        templateUrl: 'modules/board/controller/Feed/template.html'
       })
   }
 })(angular);

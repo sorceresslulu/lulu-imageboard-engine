@@ -1,0 +1,9 @@
+<div class="board-feed">
+  <ul>
+    <li ng-repeat="thread in boardFeed.getThreads()">
+      ThreadId: {{thread.id}}
+
+      <a ng-href="/thread/view/{{thread.id}}/">[View thread]</a>
+    </li>
+  </ul>
+</div>
