@@ -1,7 +1,8 @@
 ITER0002.txt
 ============
 
-[ ] FEATURE0019: Index / Board list
-[ ] FEATURE0020: Board page
+[x] FEATURE0019: Index / Board list
+[x] FEATURE0020: Board page
 [x] FEATURE0021: Thread list
-[ ] FEATURE0023: Create thread + OP post
+[x] FEATURE0023: Create thread + OP post
+[ ] FEATURE0023: Remove ZF2 service manager completely / replace by own SM
