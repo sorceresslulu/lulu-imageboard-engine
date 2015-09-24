@@ -61,7 +61,7 @@ class PostRepository implements PostRepositoryInterface
         $posts = [];
 
         $cursor = $this->postsMongoCollection->find([
-            'thread_id' => new \MongoId($thread->getId())
+            'thread_id' => $thread->getId()->getIdValue()
         ]);
 
         foreach($cursor as $postBSON) {
