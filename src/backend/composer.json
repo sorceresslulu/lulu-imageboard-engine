@@ -1,6 +1,5 @@
 {
     "require": {
-        "zendframework/zend-servicemanager": "^2.6",
         "league/route": "^1.2"
     }
 }

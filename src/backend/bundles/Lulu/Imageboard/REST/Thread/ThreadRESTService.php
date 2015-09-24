@@ -4,9 +4,9 @@ namespace Lulu\Imageboard\REST\Thread;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
+use Lulu\Imageboard\Domain\Board\BoardRepositoryInterface;
 use Lulu\Imageboard\Domain\Thread\Thread;
 use Lulu\Imageboard\Domain\Thread\ThreadRepositoryInterface;
-use Lulu\Imageboard\Repository\Mongo\BoardRepository\Factory\BoardPrototypeFactory;
 use Lulu\Imageboard\REST\Post\Util\CreatePostFromRequest;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Lulu\Imageboard\Util\Seek\Seek;
@@ -26,18 +26,18 @@ class ThreadRESTService implements RESTServiceInterface
 
     /**
      * Board repository
-     * @var BoardPrototypeFactory
+     * @var BoardRepositoryInterface
      */
-    private $boardPrototypeFactory;
+    private $boardRepository;
 
     /**
      * ThreadRESTService constructor.
      * @param ThreadRepositoryInterface $threadRepository
-     * @param BoardPrototypeFactory $boardPrototypeFactory
+     * @param BoardRepositoryInterface $boardRepository
      */
-    public function __construct(ThreadRepositoryInterface $threadRepository, BoardPrototypeFactory $boardPrototypeFactory) {
+    public function __construct(ThreadRepositoryInterface $threadRepository, BoardRepositoryInterface $boardRepository) {
         $this->threadRepository = $threadRepository;
-        $this->boardPrototypeFactory = $boardPrototypeFactory;
+        $this->boardRepository = $boardRepository;
     }
 
     /**
@@ -97,7 +97,7 @@ class ThreadRESTService implements RESTServiceInterface
                 (int)$request->get('limit', self::DEFAULT_LIMIT)
             );
 
-            $board = $this->boardPrototypeFactory->getBoardById($args['boardId']);
+            $board = $this->boardRepository->getBoardById($args['boardId']);
 
             $jsonResponse = [];
             $threads = $this->threadRepository->getThreadsByBoard($board, $seek);

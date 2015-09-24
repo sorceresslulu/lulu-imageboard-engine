@@ -5,7 +5,7 @@ use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
 use Lulu\Imageboard\Domain\Board\Board;
-use Lulu\Imageboard\Repository\Mongo\BoardRepository;
+use Lulu\Imageboard\Application\MongoApplication\Repository\BoardRepository;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
