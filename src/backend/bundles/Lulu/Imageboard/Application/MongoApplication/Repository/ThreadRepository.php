@@ -7,6 +7,7 @@ use Lulu\Imageboard\Domain\Post\PostRepositoryInterface;
 use Lulu\Imageboard\Domain\Thread\Thread;
 use Lulu\Imageboard\Domain\Thread\ThreadRepositoryInterface;
 use Lulu\Imageboard\Util\Id;
+use Lulu\Imageboard\Util\QueryList;
 use Lulu\Imageboard\Util\Seek\SeekableInterface;
 
 class ThreadRepository implements ThreadRepositoryInterface
@@ -79,7 +80,7 @@ class ThreadRepository implements ThreadRepositoryInterface
             $threads[] = $this->createThreadFromBSON($threadBSON);
         }
 
-        return $threads;
+        return new QueryList($threads, $cursor->count());
     }
 
     /**

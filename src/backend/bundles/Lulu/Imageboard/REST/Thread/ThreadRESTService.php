@@ -99,11 +99,14 @@ class ThreadRESTService implements RESTServiceInterface
 
             $board = $this->boardRepository->getBoardById($args['boardId']);
 
-            $jsonResponse = [];
-            $threads = $this->threadRepository->getThreadsByBoard($board, $seek);
+            $threadsQueryList = $this->threadRepository->getThreadsByBoard($board, $seek);
+            $jsonResponse = [
+                'items' => [],
+                'total' => $threadsQueryList->getTotal()
+            ];
 
-            foreach ($threads as $thread) {
-                $jsonResponse[] = $this->convertThreadToJSON($thread);
+            foreach ($threadsQueryList->getItems() as $thread) {
+                $jsonResponse['items'][] = $this->convertThreadToJSON($thread);
             }
 
             return new Ok($jsonResponse);

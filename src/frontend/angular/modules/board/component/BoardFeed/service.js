@@ -7,14 +7,39 @@
   ;
 
   factory.$inject = [
+    'PageControlFactory',
     'BoardFeedRestResource',
     'ThreadService'
   ];
 
-  function factory(BoardFeedRestResource, /* TODO:: remove this temp solution */ ThreadService) {
+  function factory(PageControlFactory, BoardFeedRestResource, /* TODO:: remove this temp solution */ ThreadService) {
+    var THREADS_PER_PAGE = 3;
+
     function BoardFeed(board) {
+      var boardFeedService = this;
+
+      this.status = {
+        ready: false
+      };
       this.board = board;
       this.threads = [];
+      this.pageControl = PageControlFactory.create(THREADS_PER_PAGE, function(offset, limit) {
+        boardFeedService.status.ready = false;
+
+        ThreadService.getThreadsByBoardId(boardFeedService.board.sId, {
+          offset: offset,
+          limit: limit
+        }).then(function(queryList) {
+          boardFeedService.setup({
+            threads: queryList.items
+          });
+
+          boardFeedService.pageControl.setTotal(queryList.total);
+          boardFeedService.status.ready = true;
+
+          return queryList;
+        });
+      });
     }
 
     BoardFeed.prototype.fetch = fetch;
@@ -22,6 +47,7 @@
     BoardFeed.prototype.reset = reset;
     BoardFeed.prototype.pushThread = pushThread;
     BoardFeed.prototype.getThreads = getThreads;
+    BoardFeed.prototype.getPageControl = getPageControl;
 
     return {
       create: function createInstance(board) {
@@ -31,24 +57,9 @@
 
     /**
      * Fetch board feed
-     * @param options
      */
-    function fetch(options) {
-      var boardFeedService = this;
-
-      console.log(this.board);
-
-      ThreadService.getThreadsByBoardId(this.board.sId).then(function(threads) {
-        boardFeedService.setup({
-          threads: threads
-        });
-
-        return threads;
-      });
-
-      /* BoardFeedRestResource.query({ boardId: this.board.id }, function(feedData) {
-        boardFeedService.threads = feedData.threads;
-      }); TODO:: uncomment this */
+    function fetch() {
+      this.pageControl.update();
     }
 
     /**
@@ -88,6 +99,14 @@
      */
     function getThreads() {
       return this.threads;
+    }
+
+    /**
+     * Returns page control
+     * @returns {*}
+     */
+    function getPageControl() {
+      return this.pageControl;
     }
   }
 })(angular);

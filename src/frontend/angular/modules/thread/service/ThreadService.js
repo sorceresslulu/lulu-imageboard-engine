@@ -32,11 +32,12 @@
      * Returns threads by board Id
      * @param boardId
      * @returns promise
+     * @param options
      */
-    function getThreadsByBoardId(boardId /* TODO:: limit, offset */) {
-      return ThreadRestResource.byBoard.query({
+    function getThreadsByBoardId(boardId, options) {
+      return ThreadRestResource.byBoard.query(angular.extend({
         'boardId': boardId
-      }).$promise;
+      }, options)).$promise;
     }
 
     /**

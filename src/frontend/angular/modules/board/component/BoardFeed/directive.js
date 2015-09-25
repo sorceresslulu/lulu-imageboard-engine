@@ -12,7 +12,10 @@
     LiBoardFeed.$inject = ['$scope'];
 
     function LiBoardFeed($scope) {
+      this.currentPage = 0;
       this.boardFeed = $scope.boardFeed;
+
+      $scope.status = this.boardFeed.status;
     }
 
     return {

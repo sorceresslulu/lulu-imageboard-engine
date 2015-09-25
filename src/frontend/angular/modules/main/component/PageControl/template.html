@@ -1,0 +1,18 @@
+<div class="page-control">
+  <div ng-if="pageControl.maxPages > 0">
+    <header>
+      <h1>Pages</h1>
+    </header>
+    <div ng-if="pageControl.canGoPreviousPage()">
+      <a href="javascript:void(0)" ng-click="pageControl.goPreviousPage()">[Prev]</a>
+    </div>
+    <ul>
+      <li ng-repeat="page in pages">
+        <a href="javascript:void(0)" ng-click="pageControl.goPage(page.num)">{{page.num}}</a>
+      </li>
+    </ul>
+    <div ng-if="pageControl.canGoNextPage()">
+      <a href="javascript:void(0)" ng-click="pageControl.goNextPage()">[Next]</a>
+    </div>
+  </div>
+</div>
