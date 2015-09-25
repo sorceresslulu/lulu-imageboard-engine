@@ -13,6 +13,7 @@
 
     function CreateThreadForm($scope) {
       this.boardId = $scope.boardId;
+      this.boardFeed = $scope.boardFeed;
       this.postFormService = PostFormService.create();
 
       (function setupScope(directive) {
@@ -29,7 +30,8 @@
       controller: CreateThreadForm,
       templateUrl: 'modules/thread/form/CreateThreadForm/template.html',
       scope: {
-        boardId: '='
+        board: '=',
+        boardFeed: '='
       }
     };
 
@@ -40,10 +42,11 @@
     function submit($event) {
       $event.preventDefault();
 
-      var promise = ThreadService.createNewThread(this.boardId, this.postFormService.getFormData());
+      var boardFeed = this.boardFeed;
+      var promise = ThreadService.createNewThread(this.board.sId, this.postFormService.getFormData());
 
       promise.then(function(thread) {
-        console.log(thread);
+        boardFeed.pushThread(thread);
 
         return thread;
       });
