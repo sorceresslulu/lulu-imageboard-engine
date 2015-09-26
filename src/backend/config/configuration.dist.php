@@ -1,7 +1,10 @@
 <?php
 return [
-    'mongo-adapter' => [
-        'server' => '127.0.0.1',
+    'mysqli-adapter' => [
+        'host' => 'localhost',
+        'port' => 3306,
+        'user' => 'root',
+        'pass' => '',
         'db' => 'luluboard'
     ]
 ];

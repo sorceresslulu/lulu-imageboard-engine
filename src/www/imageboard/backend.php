@@ -1,5 +1,5 @@
 <?php
-use Lulu\Imageboard\Application\MongoApplication\MongoApplication;
+use Lulu\Imageboard\Application\MysqlApplication\MysqlApplication;
 use Lulu\Imageboard\ServiceManager\ServiceManager;
 
 define('LULU_IMAGEBOARD_BACKEND_DIR', __DIR__.'/../../backend');
@@ -19,7 +19,7 @@ $configuration = array_merge_recursive(
     require LULU_IMAGEBOARD_CONFIGURATION_DIR.'/factories.php'
 );
 
-$application = new MongoApplication(
+$application = new MysqlApplication(
     new ServiceManager(),
     $configuration
 );

@@ -1,5 +1,6 @@
 {
     "require": {
-        "league/route": "^1.2"
+        "league/route": "^1.2",
+        "robmorgan/phinx": "^0.4.6"
     }
 }

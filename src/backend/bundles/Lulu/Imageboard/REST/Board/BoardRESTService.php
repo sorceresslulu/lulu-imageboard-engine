@@ -4,8 +4,8 @@ namespace Lulu\Imageboard\REST\Board;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
-use Lulu\Imageboard\Domain\Board\Board;
-use Lulu\Imageboard\Application\MongoApplication\Repository\BoardRepository;
+use Lulu\Imageboard\Domain\Entity\Board\Board;
+use Lulu\Imageboard\Domain\Entity\Board\BoardRepositoryInterface;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,15 +14,15 @@ class BoardRESTService implements RESTServiceInterface
 {
     /**
      * Board Repository
-     * @var BoardRepository
+     * @var BoardRepositoryInterface
      */
     private $boardRepository;
 
     /**
      * BoardRESTService constructor.
-     * @param BoardRepository $boardRepository
+     * @param BoardRepositoryInterface $boardRepository
      */
-    public function __construct(BoardRepository $boardRepository) {
+    public function __construct(BoardRepositoryInterface $boardRepository) {
         $this->boardRepository = $boardRepository;
     }
 

@@ -1,7 +1,7 @@
 <?php
 namespace Lulu\Imageboard\REST\Post\Util;
 
-use Lulu\Imageboard\Domain\Post\Post;
+use Lulu\Imageboard\Domain\Entity\Post\Post;
 
 class CreatePostFromRequest
 {

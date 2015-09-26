@@ -1,3 +1,7 @@
 ITER0003
 ========
 
+[x] FEATURE0028: phinx
+[ ] FEATURE0027: Implements mysql repositories
+[x] FEATURE0026: Domain/[Board,Thread,Board] -> Domain/Entity/[Board,Thread,Board]
+[x] FEATURE0025: Mongo -> MySQL migration
