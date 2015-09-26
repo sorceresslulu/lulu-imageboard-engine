@@ -1,38 +1,55 @@
 <?php
 namespace Lulu\Imageboard\Application\DoctrineApplication\Domain\Repository;
 
-use Doctrine\ORM\EntityManager;
-use Lulu\Imageboard\Domain\Entity\Board;
+use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Converter\BoardConverter;
+use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Board as BoardEntity;
+use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Repositories;
 use Lulu\Imageboard\Domain\Repository\Board\BoardList;
 use Lulu\Imageboard\Domain\Repository\Board\BoardRepositoryInterface;
 
 class BoardRepository implements BoardRepositoryInterface
 {
     /**
-     * Entity Manager
-     * @var EntityManager
+     * Repositories
+     * @var Repositories
      */
-    private $entityManager;
+    private $repositories;
 
     /**
      * BoardRepository constructor.
-     * @param EntityManager $entityManager
+     * @param Repositories $repositories
      */
-    public function __construct(EntityManager $entityManager) {
-        $this->entityManager = $entityManager;
+    public function __construct(Repositories $repositories) {
+        $this->repositories = $repositories;
     }
 
     /**
      * @inheritDoc
      */
     public function getBoardById($id) {
-        throw new \Exception('Not implemented');
+        $result = $this->repositories->boards()->find($id);
+
+        if(!($result instanceof BoardEntity)) {
+            throw new \OutOfBoundsException(sprintf('Board with ID `%s` not found', $id));
+        }
+
+        $boardConverter = new BoardConverter();
+        return $boardConverter->extract($result);
     }
 
     /**
      * @inheritDoc
      */
     public function getAllBoards() {
-        throw new \Exception('Not implemented');
+        $boards = [];
+        $boardConverter = new BoardConverter();
+        $result = $this->repositories->boards()->findAll();
+
+        /** @var BoardEntity $boardEntity */
+        foreach($result as $boardEntity) {
+            $boards[] = $boardConverter->extract($boardEntity);
+        }
+
+        return new BoardList($boards);
     }
 }

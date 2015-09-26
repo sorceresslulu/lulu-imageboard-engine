@@ -70,7 +70,7 @@ class Thread
      * Set board
      * @param Board $board
      */
-    public function setBoard($board) {
+    public function setBoard(Board $board) {
         $this->board = $board;
     }
 

@@ -28,7 +28,7 @@ interface ThreadRepositoryInterface
     /**
      * Returns threads by Ids
      * @param array $threadIds
-     * @return Thread[]
+     * @return ThreadList
      */
     public function getThreadsByIds(array $threadIds);
 

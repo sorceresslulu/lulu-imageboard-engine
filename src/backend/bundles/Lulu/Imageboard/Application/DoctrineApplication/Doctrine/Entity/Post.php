@@ -1,6 +1,10 @@
 <?php
 namespace Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity;
 
+/**
+ * @Entity
+ * @Table(name="post")
+ */
 class Post
 {
     /**

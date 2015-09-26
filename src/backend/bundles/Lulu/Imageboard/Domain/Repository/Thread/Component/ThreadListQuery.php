@@ -69,6 +69,9 @@ class ThreadListQuery
         $this->withPosts = self::POSTS_MODE_ALL;
     }
 
+    /**
+     * With head posts
+     */
     public function withHeadPosts() {
         $this->withPosts = self::POSTS_MODE_HEAD;
     }

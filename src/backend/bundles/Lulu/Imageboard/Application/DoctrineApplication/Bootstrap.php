@@ -1,7 +1,11 @@
 <?php
 namespace Lulu\Imageboard\Application\DoctrineApplication;
 
+use Doctrine\ORM\EntityManager;
 use Lulu\Imageboard\Application\AbstractApplication\ApplicationInterface;
+use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Board;
+use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Post;
+use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Thread;
 
 class Bootstrap
 {
@@ -26,6 +30,7 @@ class Bootstrap
         $this->setupPHPErrorHandler();
         $this->setupConfiguration();
         $this->setupServiceManager();
+        $this->setupEntityRepositories();
     }
 
     /**
@@ -55,5 +60,18 @@ class Bootstrap
         foreach($factories as $serviceName => $serviceFactory) {
             $serviceManager->getDefinitions()->defineServiceFactory($serviceName, $serviceFactory);
         }
+    }
+
+    /**
+     * Setup entity repositories
+     */
+    private function setupEntityRepositories() {
+        /** @var EntityManager $em */
+        $em = $this->application->getServiceManager()->get('EntityManager');
+        $sm = $this->application->getServiceManager()->getInstances();
+
+        $sm->addService('BoardEntitiesRepository', $em->getRepository(Board::class));
+        $sm->addService('ThreadEntitiesRepository', $em->getRepository(Thread::class));
+        $sm->addService('PostEntitiesRepository', $em->getRepository(Post::class));
     }
 }

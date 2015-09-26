@@ -10,10 +10,10 @@ class Post
     private $id;
 
     /**
-     * Thread Id
-     * @var mixed
+     * Thread
+     * @var Thread
      */
-    private $threadId;
+    private $thread;
 
     /**
      * Author
@@ -71,22 +71,19 @@ class Post
     }
 
     /**
-     * Returns thread Id
-     * @return mixed
+     * Returns thread
+     * @return \Lulu\Imageboard\Domain\Entity\Thread
      */
-    public function getThreadId() {
-        return $this->threadId;
+    public function getThread() {
+        return $this->thread;
     }
 
     /**
-     * Set thread Id
-     * @param mixed $threadId
-     * @return $this
+     * Set thread
+     * @param \Lulu\Imageboard\Domain\Entity\Thread $thread
      */
-    public function setThreadId($threadId) {
-        $this->threadId = $threadId;
-
-        return $this;
+    public function setThread($thread) {
+        $this->thread = $thread;
     }
 
     /**

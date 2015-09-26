@@ -14,10 +14,10 @@ class Thread
     private $id;
 
     /**
-     * Board Id
-     * @var Id
+     * Board
+     * @var Board
      */
-    private $boardId;
+    private $board;
 
     /**
      * Date marks
@@ -34,19 +34,13 @@ class Thread
     /**
      * Thread constructor.
      * @param Id $id
-     * @param Id $boardId
      */
-    public function __construct(Id $id = null, Id $boardId = null) {
+    public function __construct(Id $id = null) {
         if($id === null) {
             $id = new Id();
         }
 
-        if($boardId === null) {
-            $boardId = new Id();
-        }
-
         $this->id = $id;
-        $this->boardId = $boardId;
         $this->dateMarks = new DateMarks();
     }
 
@@ -59,11 +53,19 @@ class Thread
     }
 
     /**
-     * Returns Board Id
-     * @return Id
+     * Returns board
+     * @return Board
      */
-    public function getBoardId() {
-        return $this->boardId;
+    public function getBoard() {
+        return $this->board;
+    }
+
+    /**
+     * Set board
+     * @param Board $board
+     */
+    public function setBoard($board) {
+        $this->board = $board;
     }
 
     /**
