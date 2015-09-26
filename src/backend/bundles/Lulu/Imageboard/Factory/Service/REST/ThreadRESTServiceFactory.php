@@ -1,9 +1,9 @@
 <?php
-namespace Lulu\Imageboard\Factory\REST;
+namespace Lulu\Imageboard\Factory\Service\REST;
 
 use Lulu\Imageboard\Domain\Repository\BoardRepositoryInterface;
 use Lulu\Imageboard\Domain\Repository\ThreadRepositoryInterface;
-use Lulu\Imageboard\REST\Thread\ThreadRESTService;
+use Lulu\Imageboard\Service\REST\ThreadRESTService;
 use Lulu\Imageboard\ServiceManager\FactoryInterface;
 use Lulu\Imageboard\ServiceManager\ServiceManagerInterface;
 

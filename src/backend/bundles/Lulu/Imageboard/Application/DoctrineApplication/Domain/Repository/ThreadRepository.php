@@ -76,7 +76,7 @@ class ThreadRepository implements ThreadRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function createNewThread($boardId, array $params) {
+    public function createNewThread($boardId, $params) {
         $board = $this->repositories->boards()->find($boardId);
 
         if(!($board instanceof Board)) {

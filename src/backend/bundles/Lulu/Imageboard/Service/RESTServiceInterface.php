@@ -1,5 +1,5 @@
 <?php
-namespace Lulu\Imageboard\REST;
+namespace Lulu\Imageboard\Service;
 
 use League\Route\RouteCollection;
 

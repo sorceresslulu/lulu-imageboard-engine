@@ -1,10 +1,10 @@
 <?php
-namespace Lulu\Imageboard\REST\Thread\ThreadFeedRESTService;
+namespace Lulu\Imageboard\Service\REST\Component;
 
 use Lulu\Imageboard\Domain\Repository\Post\PostList;
 use Lulu\Imageboard\Domain\Entity\Thread;
 
-interface FormatterInterface
+interface ThreadFeedFormatterInterface
 {
     /**
      * Format JSON response

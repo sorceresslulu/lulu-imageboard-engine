@@ -36,8 +36,7 @@ interface ThreadRepositoryInterface
     /**
      * Create new thread
      * @param $boardId
-     * @param array $params
      * @return Thread
      */
-    public function createNewThread($boardId, array $params);
+    public function createNewThread($boardId, $params);
 }

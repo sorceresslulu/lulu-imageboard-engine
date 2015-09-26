@@ -1,11 +1,11 @@
 <?php
-namespace Lulu\Imageboard\REST\Thread\ThreadFeedRESTService;
+namespace Lulu\Imageboard\Service\REST\Component;
 
-use Lulu\Imageboard\REST\Post\Formatter\PostFormatter;
-use Lulu\Imageboard\Domain\Repository\Post\PostList;
+use Lulu\Imageboard\Service\REST\Component\PostFormatter;
 use Lulu\Imageboard\Domain\Entity\Thread;
+use Lulu\Imageboard\Service\REST\Component\ThreadFeedFormatterInterface;
 
-class Formatter implements FormatterInterface
+class ThreadFeedThreadFeedFormatter implements ThreadFeedFormatterInterface
 {
     /**
      * @inheritDoc

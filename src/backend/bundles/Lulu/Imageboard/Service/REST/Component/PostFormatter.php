@@ -1,5 +1,5 @@
 <?php
-namespace Lulu\Imageboard\REST\Post\Formatter;
+namespace Lulu\Imageboard\Service\REST\Component;
 
 use Lulu\Imageboard\Domain\Entity\Post;
 
