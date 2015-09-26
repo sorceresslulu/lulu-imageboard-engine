@@ -1,8 +1,9 @@
 BACKLOG.TXT
 ===========
 
+[x] FEATURE0029: ORM Doctrine
 [x] FEATURE0028: phinx
-[ ] FEATURE0027: Implements mysql repositories
+[ ] FEATURE0027: Implements doctring repositories
 [x] FEATURE0026: Domain/[Board,Thread,Board] -> Domain/Entity/[Board,Thread,Board]
 [x] FEATURE0025: Mongo -> MySQL migration
 [ ] FEATURE0022: Thread list / each thread should have OP post + last 4

@@ -1,6 +1,7 @@
 {
     "require": {
         "league/route": "^1.2",
-        "robmorgan/phinx": "^0.4.6"
+        "robmorgan/phinx": "^0.4.6",
+        "doctrine/orm": "^2.5"
     }
 }

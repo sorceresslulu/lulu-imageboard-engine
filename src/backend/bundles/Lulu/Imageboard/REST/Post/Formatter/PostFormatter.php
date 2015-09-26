@@ -1,7 +1,7 @@
 <?php
 namespace Lulu\Imageboard\REST\Post\Formatter;
 
-use Lulu\Imageboard\Domain\Entity\Post\Post;
+use Lulu\Imageboard\Domain\Entity\Post;
 use Lulu\Imageboard\REST\Post\Formatter\PostFormatterInterface;
 
 class PostFormatter implements PostFormatterInterface

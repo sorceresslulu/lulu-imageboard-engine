@@ -4,8 +4,8 @@ namespace Lulu\Imageboard\REST\Board;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
-use Lulu\Imageboard\Domain\Entity\Board\Board;
-use Lulu\Imageboard\Domain\Entity\Board\BoardRepositoryInterface;
+use Lulu\Imageboard\Domain\Entity\Board;
+use Lulu\Imageboard\Domain\Repository\Board\BoardRepositoryInterface;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,7 +42,6 @@ class BoardRESTService implements RESTServiceInterface
      */
     private function boardToJSON(Board $board) {
         return [
-            'id' => (string) $board->getId() /** TODO:: id as ID not as (string) Id */,
             'sId' => (string) $board->getId(),
             'url' => $board->getUrl(),
             'title' => $board->getTitle(),

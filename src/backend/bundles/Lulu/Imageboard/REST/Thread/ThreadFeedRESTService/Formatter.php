@@ -2,8 +2,8 @@
 namespace Lulu\Imageboard\REST\Thread\ThreadFeedRESTService;
 
 use Lulu\Imageboard\REST\Post\Formatter\PostFormatter;
-use Lulu\Imageboard\Domain\Entity\Post\PostList;
-use Lulu\Imageboard\Domain\Entity\Thread\Thread;
+use Lulu\Imageboard\Domain\Repository\Post\PostList;
+use Lulu\Imageboard\Domain\Entity\Thread;
 
 class Formatter implements FormatterInterface
 {
