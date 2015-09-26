@@ -3,9 +3,9 @@ namespace Lulu\Imageboard\Application\DoctrineApplication;
 
 use Doctrine\ORM\EntityManager;
 use Lulu\Imageboard\Application\AbstractApplication\ApplicationInterface;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Board;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Post;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Thread;
+use Lulu\Imageboard\Domain\Entity\Board;
+use Lulu\Imageboard\Domain\Entity\Post;
+use Lulu\Imageboard\Domain\Entity\Thread;
 
 class Bootstrap
 {

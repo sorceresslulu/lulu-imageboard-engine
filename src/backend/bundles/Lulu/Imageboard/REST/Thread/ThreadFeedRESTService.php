@@ -4,8 +4,8 @@ namespace Lulu\Imageboard\REST\Thread;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
-use Lulu\Imageboard\Domain\Repository\Post\PostRepositoryInterface;
-use Lulu\Imageboard\Domain\Repository\Thread\ThreadRepositoryInterface;
+use Lulu\Imageboard\Domain\Repository\PostRepositoryInterface;
+use Lulu\Imageboard\Domain\Repository\ThreadRepositoryInterface;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Lulu\Imageboard\REST\Thread\ThreadFeedRESTService\Formatter;
 use Symfony\Component\HttpFoundation\Request;
@@ -50,11 +50,10 @@ class ThreadFeedRESTService implements RESTServiceInterface
         $routes->get('/backend/rest/thread/feed/{threadId}', function (Request $request, Response $response, array $args) {
             try {
                 $thread = $this->threadRepository->getThreadById($args['threadId']);
-                $posts = $this->postRepository->getPostsOfThread($thread);
 
                 $formatter = new Formatter();
 
-                return new Ok($formatter->format($thread, $posts));
+                return new Ok($formatter->format($thread));
             } catch (\OutOfBoundsException $e) {
                 throw new NotFoundException($e->getMessage());
             }

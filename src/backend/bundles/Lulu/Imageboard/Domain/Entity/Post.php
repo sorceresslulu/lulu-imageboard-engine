@@ -1,78 +1,60 @@
 <?php
 namespace Lulu\Imageboard\Domain\Entity;
 
+/**
+ * @Entity
+ * @Table(name="post")
+ */
 class Post
 {
     /**
-     * Post Id
-     * @var mixed
+     * Id
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
+     * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * Thread
+     * @ManyToOne(targetEntity="Lulu\Imageboard\Domain\Entity\Thread", inversedBy="posts")
+     * @JoinColumn(name="thread_id", referencedColumnName="id")
      * @var Thread
      */
-    private $thread;
+    protected $thread;
 
     /**
      * Author
+     * @Column(type="string")
      * @var string
      */
-    private $author;
+    protected $author;
 
     /**
-     * Email
+     * E-mail
+     * @Column(type="string")
      * @var string
      */
-    private $email;
+    protected $email;
 
     /**
      * Content
+     * @Column(type="text")
      * @var string
      */
-    private $content;
+    protected $content;
 
     /**
-     * Post constructor.
-     * @param mixed $id
-     */
-    public function __construct($id = null) {
-        $this->id = $id;
-    }
-
-    /**
-     * Returns post Id
-     * @return mixed
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
 
     /**
-     * Define Id for this post
-     * @param $id
-     * @throws \Exception
-     */
-    public function defineId($id) {
-        if($this->isIdDefined()) {
-            throw new \Exception('Id is already defined');
-        }
-
-        $this->id = $id;
-    }
-
-    /**
-     * Returns true if Id for this post is defined
-     * @return bool
-     */
-    public function isIdDefined() {
-        return $this->id !== null;
-    }
-
-    /**
      * Returns thread
-     * @return \Lulu\Imageboard\Domain\Entity\Thread
+     * @return Thread
      */
     public function getThread() {
         return $this->thread;
@@ -80,7 +62,7 @@ class Post
 
     /**
      * Set thread
-     * @param \Lulu\Imageboard\Domain\Entity\Thread $thread
+     * @param Thread $thread
      */
     public function setThread($thread) {
         $this->thread = $thread;
@@ -97,16 +79,13 @@ class Post
     /**
      * Set author
      * @param string $author
-     * @return $this
      */
     public function setAuthor($author) {
         $this->author = $author;
-
-        return $this;
     }
 
     /**
-     * Returns email
+     * Returns  email
      * @return string
      */
     public function getEmail() {
@@ -116,12 +95,9 @@ class Post
     /**
      * Set email
      * @param string $email
-     * @return $this
      */
     public function setEmail($email) {
         $this->email = $email;
-
-        return $this;
     }
 
     /**
@@ -135,11 +111,8 @@ class Post
     /**
      * Set content
      * @param string $content
-     * @return $this
      */
     public function setContent($content) {
         $this->content = $content;
-
-        return $this;
     }
 }

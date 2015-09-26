@@ -1,7 +1,7 @@
 <?php
 namespace Lulu\Imageboard\Application\DoctrineApplication\Factory\Domain\Repository;
 
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Repositories;
+use Lulu\Imageboard\Application\DoctrineApplication\Domain\Repositories;
 use Lulu\Imageboard\Application\DoctrineApplication\Domain\Repository\PostRepository;
 use Lulu\Imageboard\ServiceManager\FactoryInterface;
 use Lulu\Imageboard\ServiceManager\ServiceManagerInterface;

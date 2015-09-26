@@ -1,7 +1,7 @@
 <?php
 namespace Lulu\Imageboard\Factory\REST;
 
-use Lulu\Imageboard\Domain\Repository\Board\BoardRepositoryInterface;
+use Lulu\Imageboard\Domain\Repository\BoardRepositoryInterface;
 use Lulu\Imageboard\REST\Board\BoardRESTService;
 use Lulu\Imageboard\ServiceManager\FactoryInterface;
 use Lulu\Imageboard\ServiceManager\ServiceManagerInterface;

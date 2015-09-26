@@ -10,7 +10,7 @@ use Lulu\Imageboard\ServiceManager\ServiceManagerInterface;
 class EntityManagerFactory implements FactoryInterface
 {
     public function createServiceInstance(ServiceManagerInterface $serviceManager) {
-        $entityDirectory = $serviceManager->get('DoctrineApplicationPath').'/Doctrine/Entity';
+        $entityDirectory = $serviceManager->get('DoctrineApplicationPath').'/../../Domain/Entity';
 
         $configuration = Setup::createAnnotationMetadataConfiguration([$entityDirectory], true);
         $connectConfiguration = $serviceManager->get('DoctrineConfiguration');

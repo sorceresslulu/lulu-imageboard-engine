@@ -1,52 +1,61 @@
 <?php
 namespace Lulu\Imageboard\Domain\Entity;
 
-use Lulu\Imageboard\Domain\Repository\Post\PostList;
-use Lulu\Imageboard\Util\DateMarks;
-use Lulu\Imageboard\Util\Id;
+use Doctrine\Common\Collections\ArrayCollection;
 
+/**
+ * @Entity
+ * @Table(name="thread")
+ */
 class Thread
 {
     /**
-     * Thread Id
-     * @var Id
+     * Id
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
+     * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * Board
+     * @OneToOne(targetEntity="Lulu\Imageboard\Domain\Entity\Board")
+     * @JoinColumn(name="board_id", referencedColumnName="id")
      * @var Board
      */
-    private $board;
+    protected $board;
 
     /**
-     * Date marks
-     * @var DateMarks
+     * Date Created On
+     * @Column(type="datetime")
+     * @var \DateTime
      */
-    private $dateMarks;
+    protected $dateCreatedOn;
 
     /**
-     * Posts List
-     * @var PostList
+     * Date Updated On
+     * @Column(type="datetime")
+     * @var \DateTime
      */
-    private $posts;
+    protected $dateUpdatedOn;
 
     /**
-     * Thread constructor.
-     * @param Id $id
+     * Posts
+     * @OneToMany(targetEntity="Lulu\Imageboard\Domain\Entity\Post", mappedBy="thread")
+     * @var ArrayCollection
      */
-    public function __construct(Id $id = null) {
-        if($id === null) {
-            $id = new Id();
-        }
+    protected $posts;
 
-        $this->id = $id;
-        $this->dateMarks = new DateMarks();
+    public function __construct() {
+        $this->posts = new ArrayCollection();
+        $this->dateCreatedOn = new \DateTime();
+        $this->dateUpdatedOn = new \DateTime();
     }
 
     /**
-     * Returns Id
-     * @return Id
+     * Returns id
+     * @return int
      */
     public function getId() {
         return $this->id;
@@ -64,31 +73,55 @@ class Thread
      * Set board
      * @param Board $board
      */
-    public function setBoard($board) {
+    public function setBoard(Board $board) {
         $this->board = $board;
     }
 
     /**
-     * Returns Date Marks
-     * @return DateMarks
+     * Returns date created on
+     * @return \DateTime
      */
-    public function getDateMarks() {
-        return $this->dateMarks;
+    public function getDateCreatedOn() {
+        return $this->dateCreatedOn;
     }
 
     /**
-     * Returns posts list
-     * @return PostList
+     * Set date updated on
+     * @param \DateTime $dateCreatedOn
+     */
+    public function setDateCreatedOn($dateCreatedOn) {
+        $this->dateCreatedOn = $dateCreatedOn;
+    }
+
+    /**
+     * Returns date updated on
+     * @return \DateTime
+     */
+    public function getDateUpdatedOn() {
+        return $this->dateUpdatedOn;
+    }
+
+    /**
+     * Set date updated on
+     * @param \DateTime $dateUpdatedOn
+     */
+    public function setDateUpdatedOn($dateUpdatedOn) {
+        $this->dateUpdatedOn = $dateUpdatedOn;
+    }
+
+    /**
+     * Returns posts
+     * @return ArrayCollection
      */
     public function getPosts() {
         return $this->posts;
     }
 
     /**
-     * Set posts list
-     * @param PostList $posts
+     * Set posts
+     * @param ArrayCollection $posts
      */
-    public function setPosts(PostList $posts) {
+    public function setPosts($posts) {
         $this->posts = $posts;
     }
 }

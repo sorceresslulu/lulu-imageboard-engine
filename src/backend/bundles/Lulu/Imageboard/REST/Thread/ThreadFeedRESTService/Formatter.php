@@ -10,17 +10,17 @@ class Formatter implements FormatterInterface
     /**
      * @inheritDoc
      */
-    public function format(Thread $thread, PostList $postList) {
+    public function format(Thread $thread) {
         $postFormatter = new PostFormatter();
 
         $jsonResponse = [
             'thread' => [
-                'id' => (string) $thread->getId(),
+                'id' => $thread->getId(),
             ],
             'posts' => []
         ];
 
-        foreach($postList->getPosts() as $post) {
+        foreach($thread->getPosts() as $post) {
             $jsonResponse['posts'][] = $postFormatter->format($post);
         }
 

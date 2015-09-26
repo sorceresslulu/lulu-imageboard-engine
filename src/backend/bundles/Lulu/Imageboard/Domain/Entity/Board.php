@@ -1,49 +1,50 @@
 <?php
 namespace Lulu\Imageboard\Domain\Entity;
 
-use Lulu\Imageboard\Util\Id;
-
+/**
+ * @Entity
+ * @Table(name="board")
+ */
 class Board
 {
     /**
      * Id
-     * @var Id
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
+     * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * Url
+     * @Column(type="string")
      * @var string
      */
-    private $url;
+    protected $url;
 
     /**
      * Title
+     * @Column(type="string")
      * @var string
      */
-    private $title;
+    protected $title;
 
     /**
      * Description
+     * @Column(type="text")
      * @var string
      */
-    private $description;
-
-    /**
-     * Board constructor.
-     * @param mixed $id
-     */
-    public function __construct(Id $id) {
-        $this->id = $id;
-    }
+    protected $description;
 
     /**
      * Returns Id
-     * @return Id
+     * @return int
      */
     public function getId() {
         return $this->id;
     }
+
     /**
      * Returns url
      * @return string

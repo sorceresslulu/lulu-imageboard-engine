@@ -1,5 +1,5 @@
 <?php
-namespace Lulu\Imageboard\Domain\Repository\Board;
+namespace Lulu\Imageboard\Domain\Repository;
 
 use Lulu\Imageboard\Domain\Entity\Board;
 use Lulu\Imageboard\Domain\Repository\Board\BoardList;
@@ -15,7 +15,7 @@ interface BoardRepositoryInterface
 
     /**
      * Returns all boards
-     * @return BoardList
+     * @return Board[]
      */
     public function getAllBoards();
 }

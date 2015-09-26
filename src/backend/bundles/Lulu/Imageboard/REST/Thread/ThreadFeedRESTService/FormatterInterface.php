@@ -9,8 +9,7 @@ interface FormatterInterface
     /**
      * Format JSON response
      * @param Thread $thread
-     * @param PostList $postList
      * @return array
      */
-    public function format(Thread $thread, PostList $postList);
+    public function format(Thread $thread);
 }

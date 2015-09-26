@@ -2,7 +2,6 @@
 namespace Lulu\Imageboard\REST\Post\Formatter;
 
 use Lulu\Imageboard\Domain\Entity\Post;
-use Lulu\Imageboard\REST\Post\Formatter\PostFormatterInterface;
 
 class PostFormatter implements PostFormatterInterface
 {
@@ -12,7 +11,7 @@ class PostFormatter implements PostFormatterInterface
     public function format(Post $post) {
         return [
             'id' => $post->getId(),
-            'thread_id' => $post->getThreadId(),
+            'thread_id' => (string) $post->getThread()->getId(),
             'author' => $post->getAuthor(),
             'email' => $post->getEmail(),
             'content' => $post->getContent()

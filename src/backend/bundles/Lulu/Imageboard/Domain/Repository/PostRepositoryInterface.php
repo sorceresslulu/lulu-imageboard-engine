@@ -1,5 +1,5 @@
 <?php
-namespace Lulu\Imageboard\Domain\Repository\Post;
+namespace Lulu\Imageboard\Domain\Repository;
 
 use Lulu\Imageboard\Domain\Entity\Post;
 use Lulu\Imageboard\Domain\Repository\Post\PostList;
@@ -10,7 +10,7 @@ interface PostRepositoryInterface
 {
     /**
      * Returns all posts
-     * @return PostList
+     * @return Post[]
      */
     public function getAllPosts();
 
@@ -18,21 +18,21 @@ interface PostRepositoryInterface
      * Returns all posts
      * Query is limited by seek
      * @param SeekableInterface $seek
-     * @return PostList
+     * @return Post[]
      */
     public function getAllPostsWithSeek(SeekableInterface $seek);
 
     /**
      * Returns all posts of thread
      * @param Thread $thread
-     * @return PostList
+     * @return Post[]
      */
     public function getPostsOfThread(Thread $thread);
 
     /**
      * Returns all posts by thread Id
      * @param $threadId
-     * @return PostList
+     * @return Post[]
      */
     public function getPostsByThreadId($threadId);
 
@@ -46,15 +46,17 @@ interface PostRepositoryInterface
     /**
      * Returns posts by Ids
      * @param array $ids
-     * @return PostList
+     * @return Post[]
      */
     public function getPostsByIds(array $ids);
 
     /**
      * Save new post
-     * @param Post $post
+     * @param int $threadId
+     * @param array $params
+     * @return
      */
-    public function createPost(Post $post);
+    public function createPost($threadId, array $params);
 
     /**
      * Update post

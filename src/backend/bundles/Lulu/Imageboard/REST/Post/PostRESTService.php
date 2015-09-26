@@ -7,7 +7,7 @@ use League\Route\RouteCollection;
 use Lulu\Imageboard\REST\Post\Formatter\PostFormatter;
 use Lulu\Imageboard\REST\Post\Formatter\PostFormatterInterface;
 use Lulu\Imageboard\Domain\Entity\Post;
-use Lulu\Imageboard\Domain\Repository\Post\PostRepositoryInterface;
+use Lulu\Imageboard\Domain\Repository\PostRepositoryInterface;
 use Lulu\Imageboard\REST\Post\Util\CreatePostFromRequest;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Lulu\Imageboard\Util\Seek\SeekFromRequest;
@@ -44,11 +44,10 @@ class PostRESTService implements RESTServiceInterface
      * @inheritdoc
      */
     public function initRoutes(RouteCollection $routes) {
-        $this->routeGetAll($routes);
         $this->routeGetById($routes);
         $this->routeGetByIds($routes);
         $this->routeGetByThreadId($routes);
-        $this->putPost($routes);
+        $this->postCreatePost($routes);
     }
 
     /**
@@ -58,36 +57,6 @@ class PostRESTService implements RESTServiceInterface
      */
     private function postToJSON(Post $post) {
         return $this->postFormatter->format($post);
-    }
-
-    /**
-     * Create post from request
-     * @param $threadId
-     * @param Request $request
-     * @return Post
-     */
-    private function createPostFromRequest($threadId, Request $request) {
-        $angularRequest = json_decode($request->getContent(), true);
-        $createPostFromRequest = new CreatePostFromRequest();
-
-        return $createPostFromRequest->createPostFromRequest($threadId, $angularRequest);
-    }
-
-    /**
-     * Route – GetAll
-     * @param RouteCollection $routes
-     */
-    public function routeGetAll(RouteCollection $routes) {
-        $routes->get('/backend/rest/post', function (Request $request) {
-            $jsonResponse = [];
-            $seekFromRequest = new SeekFromRequest($request, self::MAX_LIMIT, self::DEFAULT_LIMIT);
-
-            foreach ($this->postRepository->getAllPostsWithSeek($seekFromRequest)->getPosts() as $post) {
-                $jsonResponse[] = $this->postToJSON($post);
-            }
-
-            return new Ok($jsonResponse);
-        });
     }
 
     /**
@@ -118,7 +87,7 @@ class PostRESTService implements RESTServiceInterface
                 throw new \Exception(sprintf('Too much posts requested, expected max to %d, got %d', self::MAX_LIMIT, count($ids)));
             }
 
-            foreach ($this->postRepository->getPostsByIds($ids)->getPosts() as $post) {
+            foreach ($this->postRepository->getPostsByIds($ids) as $post) {
                 $jsonResponse[] = $this->postToJSON($post);
             }
 
@@ -140,7 +109,7 @@ class PostRESTService implements RESTServiceInterface
                 throw new NotFoundException($e->getMessage());
             }
 
-            foreach ($posts->getPosts() as $post) {
+            foreach ($posts as $post) {
                 $jsonResponse[] = $this->postToJSON($post);
             }
 
@@ -152,12 +121,9 @@ class PostRESTService implements RESTServiceInterface
      * Route – PutPost
      * @param RouteCollection $routes
      */
-    public function putPost(RouteCollection $routes) {
+    public function postCreatePost(RouteCollection $routes) {
         $routes->post('/backend/rest/post/create/{threadId}', function (Request $request, Response $response, array $args) {
-            $post = $this->createPostFromRequest($args['threadId'], $request);
-            $this->postRepository->createPost($post);
-
-            return new Ok($this->postToJSON($post));
+            throw new \Exception('Not implemented');
         });
     }
 }

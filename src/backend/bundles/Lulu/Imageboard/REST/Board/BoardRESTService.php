@@ -5,7 +5,7 @@ use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
 use Lulu\Imageboard\Domain\Entity\Board;
-use Lulu\Imageboard\Domain\Repository\Board\BoardRepositoryInterface;
+use Lulu\Imageboard\Domain\Repository\BoardRepositoryInterface;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,7 +31,6 @@ class BoardRESTService implements RESTServiceInterface
      */
     public function initRoutes(RouteCollection $routes) {
         $this->routeGetAll($routes);
-
         $this->routeGetById($routes);
     }
 
@@ -58,7 +57,7 @@ class BoardRESTService implements RESTServiceInterface
             $jsonResponse = [];
 
             /** @var Board $board */
-            foreach ($this->boardRepository->getAllBoards()->getBoards() as $board) {
+            foreach ($this->boardRepository->getAllBoards() as $board) {
                 $jsonResponse[] = $this->boardToJSON($board);
             }
 

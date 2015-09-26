@@ -1,8 +1,8 @@
 <?php
-namespace Lulu\Imageboard\Application\DoctrineApplication\Factory\Doctrine;
+namespace Lulu\Imageboard\Application\DoctrineApplication\Factory\Domain;
 
 use Doctrine\ORM\EntityManager;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Repositories;
+use Lulu\Imageboard\Application\DoctrineApplication\Domain\Repositories;
 use Lulu\Imageboard\ServiceManager\FactoryInterface;
 use Lulu\Imageboard\ServiceManager\ServiceManagerInterface;
 

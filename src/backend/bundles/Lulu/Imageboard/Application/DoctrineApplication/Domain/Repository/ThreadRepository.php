@@ -1,19 +1,12 @@
 <?php
 namespace Lulu\Imageboard\Application\DoctrineApplication\Domain\Repository;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManager;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Converter\PostConverter;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Converter\ThreadConverter;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Thread as ThreadEntity;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Repositories;
+use Lulu\Imageboard\Application\DoctrineApplication\Domain\Repositories;
+use Lulu\Imageboard\Domain\Entity\Board;
 use Lulu\Imageboard\Domain\Entity\Post;
 use Lulu\Imageboard\Domain\Entity\Thread;
 use Lulu\Imageboard\Domain\Repository\Thread\Component\ThreadListQuery;
-use Lulu\Imageboard\Domain\Repository\Thread\ThreadList;
-use Lulu\Imageboard\Domain\Repository\Thread\ThreadRepositoryInterface;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Post as PostEntity;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Board as BoardEntity;
+use Lulu\Imageboard\Domain\Repository\ThreadRepositoryInterface;
 use Lulu\Imageboard\Util\QueryList;
 
 class ThreadRepository implements ThreadRepositoryInterface
@@ -32,71 +25,80 @@ class ThreadRepository implements ThreadRepositoryInterface
         $this->repositories = $repositories;
     }
 
-
     /**
      * @inheritDoc
      */
     public function getThreads(ThreadListQuery $threadListQuery) {
-        throw new \Exception('Not implemented');
+        $repository = $this->repositories->threads();
+
+        $criteria = [
+            'board' => $threadListQuery->getBoard()
+        ];
+        $limit = $threadListQuery->getSeek()->getLimit();
+        $offset = $threadListQuery->getSeek()->getOffset();
+
+        $threads = $repository->findBy($criteria, null, $limit, $offset);
+
+        $countQuery = $repository->createQueryBuilder('t');
+        $countQuery
+            ->select('count(t.id)')
+            ->where('t.board = :board')
+            ->setParameter('board', $threadListQuery->getBoard())
+        ;
+
+        $total = (int) $countQuery->getQuery()->getSingleScalarResult();
+
+        return new QueryList($threads, $total);
     }
 
     /**
      * @inheritDoc
      */
     public function getThreadById($threadId) {
-        $threadEntity = $this->repositories->threads()->find($threadId);
+        $thread = $this->repositories->threads()->find($threadId);
 
-        if(!($threadEntity instanceof ThreadEntity)) {
+        if(!($thread instanceof Thread)) {
             throw new \OutOfBoundsException(sprintf('Thread with ID `%s` not found', $threadId));
         }
 
-        $threadConverter = new ThreadConverter();
-
-        return $threadConverter->extract($threadEntity);
+        return $thread;
     }
 
     /**
      * @inheritDoc
      */
     public function getThreadsByIds(array $threadIds) {
-        $threads = [];
-        $threadConverter = new ThreadConverter();
-        $threadEntities = $this->repositories->threads()->findBy([
+        return $threadEntities = $this->repositories->threads()->findBy([
             'id' => $threadIds
         ]);
-
-        foreach($threadEntities as $threadEntity) {
-            $threads[] = $threadConverter->extract($threadEntity);
-        }
-
-        return new ThreadList($threads);
     }
 
     /**
      * @inheritDoc
      */
-    public function createNewThread($boardId, Post $post) {
+    public function createNewThread($boardId, array $params) {
         $board = $this->repositories->boards()->find($boardId);
 
-        if(!($board instanceof BoardEntity)) {
+        if(!($board instanceof Board)) {
             throw new \OutOfBoundsException(sprintf('Board with ID `%s` not found', $boardId));
         }
 
-        $threadEntity = new ThreadEntity();
+        $thread = new Thread();
+        $thread->setBoard($board);
 
-        $postEntity = new PostEntity();
-        $postEntity->setThread($threadEntity);
+        $post = new Post();
+        $post->setEmail($params['post']['email']);
+        $post->setAuthor($params['post']['author']);
+        $post->setContent($params['post']['content']);
+        $post->setThread($thread);
 
-        $postConverter = new PostConverter();
-        $postConverter->hydrate($post, $postEntity);
-
-        $threadEntity->setBoard($board);
-        $threadEntity->setPosts(new ArrayCollection([
-            $postEntity
-        ]));
+        $thread->getPosts()->add($post);
 
         $em = $this->repositories->getEntityManager();
-        $em->persist($threadEntity);
+        $em->persist($post);
+        $em->persist($thread);
         $em->flush();
-            }
+
+        return $thread;
+    }
 }

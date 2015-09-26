@@ -1,11 +1,9 @@
 <?php
 namespace Lulu\Imageboard\Application\DoctrineApplication\Domain\Repository;
 
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Converter\BoardConverter;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Entity\Board as BoardEntity;
-use Lulu\Imageboard\Application\DoctrineApplication\Doctrine\Repositories;
-use Lulu\Imageboard\Domain\Repository\Board\BoardList;
-use Lulu\Imageboard\Domain\Repository\Board\BoardRepositoryInterface;
+use Lulu\Imageboard\Application\DoctrineApplication\Domain\Repositories;
+use Lulu\Imageboard\Domain\Entity\Board;
+use Lulu\Imageboard\Domain\Repository\BoardRepositoryInterface;
 
 class BoardRepository implements BoardRepositoryInterface
 {
@@ -29,27 +27,17 @@ class BoardRepository implements BoardRepositoryInterface
     public function getBoardById($id) {
         $result = $this->repositories->boards()->find($id);
 
-        if(!($result instanceof BoardEntity)) {
+        if(!($result instanceof Board)) {
             throw new \OutOfBoundsException(sprintf('Board with ID `%s` not found', $id));
         }
 
-        $boardConverter = new BoardConverter();
-        return $boardConverter->extract($result);
+        return $result;
     }
 
     /**
      * @inheritDoc
      */
     public function getAllBoards() {
-        $boards = [];
-        $boardConverter = new BoardConverter();
-        $result = $this->repositories->boards()->findAll();
-
-        /** @var BoardEntity $boardEntity */
-        foreach($result as $boardEntity) {
-            $boards[] = $boardConverter->extract($boardEntity);
-        }
-
-        return new BoardList($boards);
+        return $this->repositories->boards()->findAll();
     }
 }

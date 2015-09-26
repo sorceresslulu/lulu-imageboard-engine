@@ -4,10 +4,10 @@ namespace Lulu\Imageboard\REST\Thread;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
-use Lulu\Imageboard\Domain\Repository\Board\BoardRepositoryInterface;
+use Lulu\Imageboard\Domain\Repository\BoardRepositoryInterface;
 use Lulu\Imageboard\Domain\Repository\Thread\Component\ThreadListQuery;
 use Lulu\Imageboard\Domain\Entity\Thread;
-use Lulu\Imageboard\Domain\Repository\Thread\ThreadRepositoryInterface;
+use Lulu\Imageboard\Domain\Repository\ThreadRepositoryInterface;
 use Lulu\Imageboard\REST\Post\Util\CreatePostFromRequest;
 use Lulu\Imageboard\REST\RESTServiceInterface;
 use Lulu\Imageboard\Util\Seek\Seek;
@@ -45,7 +45,6 @@ class ThreadRESTService implements RESTServiceInterface
      * @inheritdoc
      */
     public function initRoutes(RouteCollection $routes) {
-        $this->routeGetAll($routes);
         $this->routeGetByBoard($routes);
         $this->routeGetByIds($routes);
         $this->routeGetById($routes);
@@ -59,31 +58,8 @@ class ThreadRESTService implements RESTServiceInterface
      */
     private function convertThreadToJSON(Thread $thread) {
         return [
-            'id' => (string) $thread->getId()
+            'id' => $thread->getId()
         ];
-    }
-
-    /**
-     * Route – GetAll
-     * @param RouteCollection $routes
-     */
-    public function routeGetAll(RouteCollection $routes) {
-        $routes->get('/backend/rest/thread', function (Request $request, Response $response, array $args) {
-            $seek = new Seek(
-                self::MAX_LIMIT,
-                (int)$request->get('offset', 0),
-                (int)$request->get('limit', self::DEFAULT_LIMIT)
-            );
-
-            $jsonResponse = [];
-            $threads = $this->threadRepository->getAllThreadsWithSeek($seek);
-
-            foreach ($threads as $thread) {
-                $jsonResponse[] = $this->convertThreadToJSON($thread);
-            }
-
-            return new Ok($jsonResponse);
-        });
     }
 
     /**
@@ -126,7 +102,7 @@ class ThreadRESTService implements RESTServiceInterface
             $jsonResponse = [];
             $threads = $this->threadRepository->getThreadsByIds(explode(',', $args['ids']));
 
-            foreach ($threads->getThreads() as $thread) {
+            foreach ($threads as $thread) {
                 $jsonResponse[] = $this->convertThreadToJSON($thread);
             }
 
@@ -155,11 +131,8 @@ class ThreadRESTService implements RESTServiceInterface
      */
     public function routeCreateThread(RouteCollection $routes) {
         $routes->post('/backend/rest/thread/create/{boardId}', function (Request $request, Response $response, array $args) {
-            $angularRequest = $angularRequest = json_decode($request->getContent(), true);
-            $createPostFromRequest = new CreatePostFromRequest();
-            $post = $createPostFromRequest->createPostFromRequest(null, $angularRequest['post']);
-
-            $thread = $this->threadRepository->createNewThread($args['boardId'], $post);
+            $angularRequest = json_decode($request->getContent(), true);
+            $thread = $this->threadRepository->createNewThread($args['boardId'], $angularRequest);
 
             return new Ok($this->convertThreadToJSON($thread));
         });
