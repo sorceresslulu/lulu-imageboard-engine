@@ -5,6 +5,7 @@ use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use League\Route\RouteCollection;
 use Lulu\Imageboard\Domain\Board\BoardRepositoryInterface;
+use Lulu\Imageboard\Domain\Thread\Component\ThreadListQuery;
 use Lulu\Imageboard\Domain\Thread\Thread;
 use Lulu\Imageboard\Domain\Thread\ThreadRepositoryInterface;
 use Lulu\Imageboard\REST\Post\Util\CreatePostFromRequest;
@@ -99,7 +100,10 @@ class ThreadRESTService implements RESTServiceInterface
 
             $board = $this->boardRepository->getBoardById($args['boardId']);
 
-            $threadsQueryList = $this->threadRepository->getThreadsByBoard($board, $seek);
+            $threadsQuery = new ThreadListQuery($board, $seek);
+            $threadsQuery->withAllPosts();
+
+            $threadsQueryList = $this->threadRepository->getThreads($threadsQuery);
             $jsonResponse = [
                 'items' => [],
                 'total' => $threadsQueryList->getTotal()

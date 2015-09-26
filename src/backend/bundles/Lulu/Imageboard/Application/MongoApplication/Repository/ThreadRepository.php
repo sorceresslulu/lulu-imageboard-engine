@@ -4,6 +4,7 @@ namespace Lulu\Imageboard\Application\MongoApplication\Repository;
 use Lulu\Imageboard\Domain\Board\Board;
 use Lulu\Imageboard\Domain\Post\Post;
 use Lulu\Imageboard\Domain\Post\PostRepositoryInterface;
+use Lulu\Imageboard\Domain\Thread\Component\ThreadListQuery;
 use Lulu\Imageboard\Domain\Thread\Thread;
 use Lulu\Imageboard\Domain\Thread\ThreadRepositoryInterface;
 use Lulu\Imageboard\Util\Id;
@@ -50,34 +51,27 @@ class ThreadRepository implements ThreadRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getAllThreadsWithSeek(SeekableInterface $seek) {
+    public function getThreads(ThreadListQuery $threadListQuery) {
+        $criteria = [
+            'board_id' => $threadListQuery->getBoard()->getId()
+        ];
+
+        $cursor = $this->threadMongoCollection->find($criteria);
+        $cursor->skip($threadListQuery->getSeek()->getOffset());
+        $cursor->limit($threadListQuery->getSeek()->getLimit());
+
         $threads = [];
 
-        $cursor = $this->threadMongoCollection->find([]);
-        $cursor->skip($seek->getOffset());
-        $cursor->limit($seek->getLimit());
-
-        foreach($cursor as $threadBSON) {
+        while($threadBSON = $cursor->getNext()) {
             $threads[] = $this->createThreadFromBSON($threadBSON);
         }
 
-        return $threads;
-    }
+        switch($threadListQuery->getPostsMode()) {
+            case $threadListQuery::POSTS_MODE_ALL:
+                break;
 
-    /**
-     * @inheritDoc
-     */
-    public function getThreadsByBoard(Board $board, SeekableInterface $seek) {
-        $threads = [];
-
-        $cursor = $this->threadMongoCollection->find([
-            'board_id' => new \MongoId($board->getId())
-        ]);
-        $cursor->skip($seek->getOffset());
-        $cursor->limit($seek->getLimit());
-
-        foreach($cursor as $threadBSON) {
-            $threads[] = $this->createThreadFromBSON($threadBSON);
+            case $threadListQuery::POSTS_MODE_HEAD:
+                break;
         }
 
         return new QueryList($threads, $cursor->count());

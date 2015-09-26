@@ -6,4 +6,3 @@ BACKLOG.TXT
 
 [ ] FEATURE0019: Index / Board list
 [ ] FEATURE0022: Thread list / each thread should have OP post + last 4
-[ ] FEATURE0023: Remove ZF2 service manager completely / replace by own SM

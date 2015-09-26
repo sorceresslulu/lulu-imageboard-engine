@@ -3,33 +3,19 @@ namespace Lulu\Imageboard\Domain\Thread;
 
 use Lulu\Imageboard\Domain\Board\Board;
 use Lulu\Imageboard\Domain\Post\Post;
+use Lulu\Imageboard\Domain\Thread\Component\ThreadListQuery;
 use Lulu\Imageboard\Util\QueryList;
 use Lulu\Imageboard\Util\Seek\SeekableInterface;
 
 interface ThreadRepositoryInterface
 {
     /**
-     * Returns all threads
-     * @return Thread[]
-     */
-    public function getAllThreads();
-
-    /**
-     * Returns all threads
-     * Query is limited by seek
-     * @param SeekableInterface $seek
-     * @return Thread[]
-     */
-    public function getAllThreadsWithSeek(SeekableInterface $seek);
-
-    /**
      * Returns threads by board
      * Query is limited by seek
-     * @param Board $board
-     * @param SeekableInterface $seek
+     * @param ThreadListQuery $threadListQuery
      * @return QueryList
      */
-    public function getThreadsByBoard(Board $board, SeekableInterface $seek);
+    public function getThreads(ThreadListQuery $threadListQuery);
 
     /**
      * Returns thread by Id

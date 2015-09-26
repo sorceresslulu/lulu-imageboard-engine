@@ -1,6 +1,7 @@
 <?php
 namespace Lulu\Imageboard\Domain\Thread;
 
+use Lulu\Imageboard\Domain\Post\PostList;
 use Lulu\Imageboard\Util\DateMarks;
 use Lulu\Imageboard\Util\Id;
 
@@ -23,6 +24,12 @@ class Thread
      * @var DateMarks
      */
     private $dateMarks;
+
+    /**
+     * Posts List
+     * @var PostList
+     */
+    private $posts;
 
     /**
      * Thread constructor.
@@ -65,5 +72,21 @@ class Thread
      */
     public function getDateMarks() {
         return $this->dateMarks;
+    }
+
+    /**
+     * Returns posts list
+     * @return PostList
+     */
+    public function getPosts() {
+        return $this->posts;
+    }
+
+    /**
+     * Set posts list
+     * @param PostList $posts
+     */
+    public function setPosts(PostList $posts) {
+        $this->posts = $posts;
     }
 }
