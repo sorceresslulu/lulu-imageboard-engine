@@ -1,8 +1,6 @@
 BACKLOG.TXT
 ===========
 
-[ ] FEATURE0009: swagger
-[ ] BUG0001: gulp requires 2 execution to make app.js
-
-[ ] FEATURE0019: Index / Board list
+[ ] FEATURE0026: Domain/[Board,Thread,Board] -> Domain/Entity/[Board,Thread,Board]
+[ ] FEATURE0025: Mongo -> MySQL migration
 [ ] FEATURE0022: Thread list / each thread should have OP post + last 4
