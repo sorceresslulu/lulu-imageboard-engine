@@ -4,12 +4,15 @@
     <title>Luluchan</title>
     <base href="/">
     <script src="/public/assets/app.js"></script>
+    <link rel="stylesheet" href="/public/assets/layout-main.css">
   </head>
   <body ng-app="lulu-imageboard">
     <nav>
+      <header>
+        <h1><a class="menu-item" href="javascript:void(0)" ui-sref="main-index">Luluboard</a></h1>
+      </header>
       <ul>
-        <li><a href="#" ui-sref="main-index">Main/Index</a></li>
-        <li><a href="#" ui-sref="board-index">Board/Index</a></li>
+        <li><a class="menu-item" href="javascript:void(0)" ui-sref="board-index">Boards</a></li>
       </ul>
     </nav>
     <div ui-view></div>

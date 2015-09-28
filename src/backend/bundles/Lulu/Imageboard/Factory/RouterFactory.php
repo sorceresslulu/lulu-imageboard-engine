@@ -17,12 +17,14 @@ class RouterFactory implements FactoryInterface
 
         $this->setupRESTBoard($router);
         $this->setupRESTThread($router);
-        $this->setitupRESTThreadFeed($router);
+        $this->setupRESTThreadFeed($router);
+        $this->setupRESTPost($router);
 
         return $router;
     }
 
     /**
+     * REST – Board
      * @param $router
      */
     protected function setupRESTBoard(RouteCollection $router) {
@@ -31,6 +33,7 @@ class RouterFactory implements FactoryInterface
     }
 
     /**
+     * REST – Thread
      * @param $router
      */
     protected function setupRESTThread(RouteCollection $router) {
@@ -41,9 +44,20 @@ class RouterFactory implements FactoryInterface
     }
 
     /**
+     * REST – ThreadFeed
      * @param $router
      */
-    protected function setitupRESTThreadFeed(RouteCollection $router) {
+    protected function setupRESTThreadFeed(RouteCollection $router) {
         $router->get('/backend/rest/thread/feed/{id}', 'Thread\FeedController::getFeed');
+    }
+
+    /**
+     * REST – Post
+     * @param $router
+     */
+    protected function setupRESTPost(RouteCollection $router) {
+        $router->get('/backend/rest/post/{id}', 'Post\IndexController::getById');
+        $router->get('/backend/rest/post/by-ids/{ids}', 'Post\IndexController::getByIds');
+        $router->get('/backend/rest/post/query/', 'Post\IndexController::getByQuery');
     }
 }

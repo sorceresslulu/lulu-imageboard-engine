@@ -5,7 +5,7 @@ use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use Lulu\Imageboard\Domain\Repository\PostRepositoryInterface;
 use Lulu\Imageboard\Domain\Repository\ThreadRepositoryInterface;
-use Lulu\Imageboard\Service\REST\Component\ThreadFeedThreadFeedFormatter;
+use Lulu\Imageboard\Service\REST\Component\ThreadFeedFormatter;
 
 class ThreadFeedRESTService
 {
@@ -38,7 +38,7 @@ class ThreadFeedRESTService
      * @throws NotFoundException
      */
     public function getFeed($threadId) {
-        $formatter = new ThreadFeedThreadFeedFormatter();
+        $formatter = new ThreadFeedFormatter();
 
         try {
             $thread = $this->threadRepository->getThreadById($threadId);

@@ -4,6 +4,7 @@ namespace Lulu\Imageboard\Application\DoctrineApplication\Domain\Repository;
 use Lulu\Imageboard\Application\DoctrineApplication\Domain\Repositories;
 use Lulu\Imageboard\Domain\Entity\Post;
 use Lulu\Imageboard\Domain\Entity\Thread;
+use Lulu\Imageboard\Domain\Repository\Post\PostQuery;
 use Lulu\Imageboard\Domain\Repository\PostRepositoryInterface;
 use Lulu\Imageboard\Util\Seek\SeekableInterface;
 
@@ -26,56 +27,42 @@ class PostRepository implements PostRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function getAllPosts() {
-        throw new \Exception('Not implemented');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getAllPostsWithSeek(SeekableInterface $seek) {
-        throw new \Exception('Not implemented');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPostsOfThread(Thread $thread) {
-        throw new \Exception('Not implemented');
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getPostsByThreadId($threadId) {
-        throw new \Exception('Not implemented');
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getPostById($id) {
-        throw new \Exception('Not implemented');
+        $post = $this->repositories->posts()->find($id);
+
+        if(!($post instanceof Post)) {
+            throw new \Exception(sprintf('Post with ID `%s` not found', $id));
+        }
+
+        return $post;
     }
 
     /**
      * @inheritDoc
      */
     public function getPostsByIds(array $ids) {
-        throw new \Exception('Not implemented');
+        $repo = $this->repositories->posts();
+        $order = ['id' => 'desc'];
+        $criteria = [
+            'id' => $ids
+        ];
+
+        return $this->repositories->posts()->findBy($criteria, $order);
     }
 
     /**
      * @inheritDoc
      */
-    public function createPost($threadId, array $params) {
-        throw new \Exception('Not implemented');
-    }
+    public function getPosts(PostQuery $postQuery) {
+        $repo = $this->repositories->posts();
 
-    /**
-     * @inheritDoc
-     */
-    public function updatePost(Post $post) {
-        throw new \Exception('Not implemented');
+        $limit = $postQuery->getSeek()->getLimit();
+        $offset = $postQuery->getSeek()->getOffset();
+        $order = ['id' => 'desc'];
+        $criteria = [
+            'thread' => $postQuery->getThreadId()
+        ];
+
+        return $repo->findBy($criteria, $order, $limit, $offset);
     }
 }

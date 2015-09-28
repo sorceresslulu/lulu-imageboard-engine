@@ -1,7 +1,8 @@
 BACKLOG.TXT
 ===========
 
-[ ] FEATURE0031: main layout
+[ ] FEATURE0032: reply service
+[x] FEATURE0031: main layout
 [x] FEATURE0030: bower / default layout
 [x] FEATURE0029: ORM Doctrine
 [x] FEATURE0028: phinx

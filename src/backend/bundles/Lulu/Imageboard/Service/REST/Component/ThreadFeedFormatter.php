@@ -5,7 +5,7 @@ use Lulu\Imageboard\Service\REST\Component\PostFormatter;
 use Lulu\Imageboard\Domain\Entity\Thread;
 use Lulu\Imageboard\Service\REST\Component\ThreadFeedFormatterInterface;
 
-class ThreadFeedThreadFeedFormatter implements ThreadFeedFormatterInterface
+class ThreadFeedFormatter implements ThreadFeedFormatterInterface
 {
     /**
      * @inheritDoc

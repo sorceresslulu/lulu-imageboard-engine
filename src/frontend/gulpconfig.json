@@ -37,10 +37,12 @@
     "main": {
       "vendor": {
         "production": [
-          "bower_components/reset-css/reset.css"
+          "bower_components/skeleton/css/normalize.css",
+          "bower_components/skeleton/css/skeleton.css"
         ],
         "development": [
-          "bower_components/reset-css/reset.css"
+          "bower_components/skeleton/css/normalize.css",
+          "bower_components/skeleton/css/skeleton.css"
         ]
       }
     }

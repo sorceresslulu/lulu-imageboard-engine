@@ -2,40 +2,10 @@
 namespace Lulu\Imageboard\Domain\Repository;
 
 use Lulu\Imageboard\Domain\Entity\Post;
-use Lulu\Imageboard\Domain\Repository\Post\PostList;
-use Lulu\Imageboard\Domain\Entity\Thread;
-use Lulu\Imageboard\Util\Seek\SeekableInterface;
+use Lulu\Imageboard\Domain\Repository\Post\PostQuery;
 
 interface PostRepositoryInterface
 {
-    /**
-     * Returns all posts
-     * @return Post[]
-     */
-    public function getAllPosts();
-
-    /**
-     * Returns all posts
-     * Query is limited by seek
-     * @param SeekableInterface $seek
-     * @return Post[]
-     */
-    public function getAllPostsWithSeek(SeekableInterface $seek);
-
-    /**
-     * Returns all posts of thread
-     * @param Thread $thread
-     * @return Post[]
-     */
-    public function getPostsOfThread(Thread $thread);
-
-    /**
-     * Returns all posts by thread Id
-     * @param $threadId
-     * @return Post[]
-     */
-    public function getPostsByThreadId($threadId);
-
     /**
      * Returns post by Id
      * @param $id
@@ -51,16 +21,9 @@ interface PostRepositoryInterface
     public function getPostsByIds(array $ids);
 
     /**
-     * Save new post
-     * @param int $threadId
-     * @param array $params
-     * @return
+     * Returns posts by query
+     * @param PostQuery $postQuery
+     * @return Post[]
      */
-    public function createPost($threadId, array $params);
-
-    /**
-     * Update post
-     * @param Post $post
-     */
-    public function updatePost(Post $post);
+    public function getPosts(PostQuery $postQuery);
 }

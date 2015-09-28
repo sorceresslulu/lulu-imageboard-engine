@@ -4,6 +4,7 @@ namespace Lulu\Imageboard\Service\REST;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;
 use Lulu\Imageboard\Domain\Entity\Post;
+use Lulu\Imageboard\Domain\Repository\Post\PostQuery;
 use Lulu\Imageboard\Domain\Repository\PostRepositoryInterface;
 use Lulu\Imageboard\Service\REST\Component\PostFormatter;
 use Lulu\Imageboard\Service\REST\Component\PostFormatterInterface;
@@ -32,14 +33,6 @@ class PostRESTService
     public function __construct(PostRepositoryInterface $postRepository) {
         $this->postRepository = $postRepository;
         $this->postFormatter = new PostFormatter();
-    }
-
-    /**
-     * Create post
-     * @throws \Exception
-     */
-    public function createPost() {
-        throw new \Exception('Not implemented');
     }
 
     /**
@@ -79,21 +72,14 @@ class PostRESTService
     }
 
     /**
-     * Returns all posts of thread
-     * @param $threadId
-     * @return Ok
-     * @throws NotFoundException
+     * Returns posts by query
+     * @param PostQuery $postQuery
+     * @return array
      */
-    public function getByThreadId($threadId) {
+    public function getPostsByQuery(PostQuery $postQuery) {
         $jsonResponse = [];
 
-        try {
-            $posts = $this->postRepository->getPostsByThreadId($threadId);
-        } catch (\OutOfBoundsException $e) {
-            throw new NotFoundException($e->getMessage());
-        }
-
-        foreach ($posts as $post) {
+        foreach($this->postRepository->getPosts($postQuery) as $post) {
             $jsonResponse[] = $this->postToJSON($post);
         }
 
@@ -101,7 +87,7 @@ class PostRESTService
     }
 
     /**
-     * It should be called somehow like "ThreadFeedThreadFeedFormatter"
+     * It should be called somehow like "ThreadFeedFormatter"
      * @param Post $post
      * @return array
      */
