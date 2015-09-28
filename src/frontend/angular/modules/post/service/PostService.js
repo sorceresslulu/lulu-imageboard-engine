@@ -12,7 +12,6 @@
 
     PostService.prototype.getPostById = getPostById;
     PostService.prototype.getPostsByThreadId = getPostsByThreadId;
-    PostService.prototype.createPost = createPost;
 
     return new PostService();
 
@@ -32,15 +31,6 @@
      */
     function getPostsByThreadId(threadId) {
       return PostRestResource.byThreadId.query({ 'threadId': threadId }).$promise;
-    }
-
-    /**
-     * Create new post
-     * @param threadId
-     * @param post
-     */
-    function createPost(threadId, post) {
-      return PostRestResource.create.save({ threadId: threadId }, post).$promise;
     }
   }
 })(angular);

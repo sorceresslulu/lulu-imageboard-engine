@@ -4,9 +4,9 @@
     .directive('liReplyForm', factory)
   ;
 
-  factory.$inject = ['PostService', 'PostFormService'];
+  factory.$inject = ['ThreadReplyService', 'PostFormService'];
 
-  function factory(PostService, PostFormService) {
+  function factory(ThreadReplyService, PostFormService) {
     LiReplyForm.$inject = ['$scope'];
 
     function LiReplyForm($scope) {
@@ -45,7 +45,7 @@
 
       $event.preventDefault();
 
-      PostService.createPost(this.threadId, this.postFormService.getFormData()).then(function(data) {
+      ThreadReplyService.reply(this.threadId, this.postFormService.getFormData()).then(function(data) {
         directive.threadFeed.pushPost(data);
 
         return data;

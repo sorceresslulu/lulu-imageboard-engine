@@ -2,7 +2,7 @@
 namespace Lulu\Imageboard\Factory\Controller\Thread;
 
 use Lulu\Imageboard\Controller\Thread\FeedController;
-use Lulu\Imageboard\Service\REST\ThreadFeedRESTService;
+use Lulu\Imageboard\Service\REST\Thread\ThreadFeedRESTService;
 use Lulu\Imageboard\ServiceManager\FactoryInterface;
 use Lulu\Imageboard\ServiceManager\ServiceManagerInterface;
 

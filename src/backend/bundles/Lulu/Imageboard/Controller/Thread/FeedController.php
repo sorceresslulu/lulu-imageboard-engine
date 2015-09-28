@@ -2,7 +2,7 @@
 namespace Lulu\Imageboard\Controller\Thread;
 
 use Lulu\Imageboard\Controller\AbstractController;
-use Lulu\Imageboard\Service\REST\ThreadFeedRESTService;
+use Lulu\Imageboard\Service\REST\Thread\ThreadFeedRESTService;
 
 class FeedController extends AbstractController
 {

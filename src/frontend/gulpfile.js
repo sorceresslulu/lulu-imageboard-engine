@@ -74,11 +74,6 @@
    * Gulp watch
    */
   function setupGulpWatch() {
-    var options = this.options;
-
-    gulp.watch('./**/*.js', this.listTasks(options));
-    gulp.watch('./**/*.css', this.listTasks(options));
-    gulp.watch('./**/*.html', this.listTasks(options));
   }
 
   /**

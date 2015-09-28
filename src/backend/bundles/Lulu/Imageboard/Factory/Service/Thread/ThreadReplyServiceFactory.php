@@ -1,13 +1,13 @@
 <?php
-namespace Lulu\Imageboard\Factory\Service\REST;
+namespace Lulu\Imageboard\Factory\Service\Thread;
 
 use Lulu\Imageboard\Domain\Repository\PostRepositoryInterface;
 use Lulu\Imageboard\Domain\Repository\ThreadRepositoryInterface;
-use Lulu\Imageboard\Service\REST\ThreadFeedRESTService;
+use Lulu\Imageboard\Service\Thread\Reply\ThreadReplyService;
 use Lulu\Imageboard\ServiceManager\FactoryInterface;
 use Lulu\Imageboard\ServiceManager\ServiceManagerInterface;
 
-class ThreadFeedRESTServiceFactory implements FactoryInterface
+class ThreadReplyServiceFactory implements FactoryInterface
 {
     public function createServiceInstance(ServiceManagerInterface $serviceManager) {
         /** @var ThreadRepositoryInterface $threadRepository */
@@ -15,6 +15,6 @@ class ThreadFeedRESTServiceFactory implements FactoryInterface
         /** @var PostRepositoryInterface $postRepository */
         $postRepository = $serviceManager->get('PostRepository');
 
-        return new ThreadFeedRESTService($threadRepository, $postRepository);
+        return new ThreadReplyService($threadRepository, $postRepository);
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Lulu\Imageboard\Service\REST;
+namespace Lulu\Imageboard\Service\REST\Thread;
 
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\JsonResponse\Ok;

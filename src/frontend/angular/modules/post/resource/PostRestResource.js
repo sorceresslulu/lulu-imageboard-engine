@@ -12,15 +12,13 @@
     var
       indexResource = $resource('/backend/rest/post/:postId', { 'postId': '@id' }),
       byIdsResource = $resource('/backend/rest/post/by-ids/:postIds', { 'postIds': '@id' }),
-      byThreadIdResource =  $resource('/backend/rest/post/by-thread/:threadId', { 'threadId': '@id' }),
-      createResource = $resource('/backend/rest/post/create/:threadId', { 'threadId': '@id' })
+      byThreadIdResource =  $resource('/backend/rest/post/by-thread/:threadId', { 'threadId': '@id' })
     ;
 
     return {
       index: indexResource,
       byIds: byIdsResource,
-      byThreadId: byThreadIdResource,
-      create: createResource
+      byThreadId: byThreadIdResource
     };
   }
 })(angular);
