@@ -32,5 +32,17 @@
       "bower_components/sprintf/dist/sprintf.js",
       "bower_components/sprintf/dist/angular-sprintf.js"
     ]
+  },
+  "layout": {
+    "main": {
+      "vendor": {
+        "production": [
+          "bower_components/reset-css/reset.css"
+        ],
+        "development": [
+          "bower_components/reset-css/reset.css"
+        ]
+      }
+    }
   }
 }

@@ -3,7 +3,9 @@
   var gulpConfig = require('./gulpconfig.json');
   var concat = require('gulp-concat');
   var templateCache = require('gulp-angular-templatecache');
+  var sass = require('gulp-sass');
   var uglify = require('gulp-uglify');
+  var uglifycss = require('gulp-uglifycss');
 
   var ASSETS_DIRECTORY = './../www/imageboard/public/assets/';
   var TMP_DIRECTORY = './tmp/';
@@ -11,6 +13,7 @@
   function GulpRunner() {
     this.gulpConfig = gulpConfig;
     this.options = {
+      mode: "production",
       minify: true
     };
 
@@ -19,6 +22,7 @@
     this.setupVendorTask();
     this.setupAngularTask();
     this.setupJsConcatTask();
+    this.setupSASSMainLayoutTask();
   }
 
   GulpRunner.prototype.run = run;
@@ -28,6 +32,7 @@
   GulpRunner.prototype.setupVendorTask = setupVendorTask;
   GulpRunner.prototype.setupAngularTask = setupAngularTask;
   GulpRunner.prototype.setupJsConcatTask = setupJsConcatTask;
+  GulpRunner.prototype.setupSASSMainLayoutTask = setupSASSMainLayoutTask;
 
   return (new GulpRunner()).run();
 
@@ -50,7 +55,10 @@
       "vendor",
       "angular-modules",
       "angular-templates",
-      "js-concat"
+      "js-concat",
+      "sass-layout-main",
+      "sass-layout-main-vendor",
+      "sass-layout-main-concat"
     ];
 
     if(options.minify) {
@@ -80,11 +88,13 @@
     var runner = this;
 
     gulp.task('mode-development', function() {
-      runner.options.minify = true;
+      runner.options.minify = false;
+      runner.options.mode = 'development';
     });
 
     gulp.task('mode-production', function() {
-      runner.options.minify = false
+      runner.options.minify = true;
+      runner.options.mode = 'production';
     });
   }
 
@@ -94,7 +104,7 @@
   function setupVendorTask() {
     var src;
 
-    if(this.options.minify) {
+    if(this.options.mode == "production") {
       src = this.gulpConfig.vendor.production;
     }else{
       src = this.gulpConfig.vendor.development;
@@ -113,7 +123,7 @@
   function setupAngularTask() {
     var config;
 
-    if(this.options.minify) {
+    if(this.options.mode == "production") {
       config = this.gulpConfig.angular.production;
     }else{
       config = this.gulpConfig.angular.development;
@@ -159,12 +169,68 @@
       ;
 
       if(runner.options.minify) {
-        // task.pipe(uglify());
+         task.pipe(uglify());
       }
 
       task.pipe(gulp.dest(ASSETS_DIRECTORY));
 
       return task
+    });
+  }
+
+  /**
+   * SASS – Layout – Main
+   */
+  function setupSASSMainLayoutTask() {
+    var runner = this;
+
+    /**
+     * Layout.sass
+     */
+    gulp.task('sass-layout-main', function() {
+      return gulp.src('./layout/main/styles/layout.sass')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(concat('layout-main.css'))
+        .pipe(gulp.dest(TMP_DIRECTORY))
+      ;
+    });
+
+    /**
+     * Vendor
+     */
+    gulp.task('sass-layout-main-vendor', function() {
+      var src;
+
+      if(runner.options.mode == "production") {
+        src = runner.gulpConfig.layout.main.vendor.production;
+      }else{
+        src = runner.gulpConfig.layout.main.vendor.development;
+      }
+
+      return gulp.src(src)
+        .pipe(concat('layout-main-vendor.css'))
+        .pipe(gulp.dest(TMP_DIRECTORY))
+      ;
+    });
+
+    /**
+     * Concat & Minify
+     */
+    gulp.task('sass-layout-main-concat', function() {
+      var src = [
+        TMP_DIRECTORY + '/layout-main-vendor.css',
+        TMP_DIRECTORY + '/layout-main.css'
+      ];
+
+      var task = gulp.src(src)
+        .pipe(concat('layout-main.css'))
+      ;
+
+      if(runner.options.minify) {
+        task.pipe(uglifycss());
+      }
+
+      return task.pipe(gulp.dest(ASSETS_DIRECTORY));
     });
   }
 })(require);
