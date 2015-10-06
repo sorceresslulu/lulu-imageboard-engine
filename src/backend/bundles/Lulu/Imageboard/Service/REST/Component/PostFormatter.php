@@ -14,7 +14,9 @@ class PostFormatter implements PostFormatterInterface
             'thread_id' => (string) $post->getThread()->getId(),
             'author' => $post->getAuthor(),
             'email' => $post->getEmail(),
-            'content' => $post->getContent()
+            'content' => $post->getContent(),
+            'created_on' => $post->getDateCreatedOn()->format(\DateTime::ISO8601),
+            'updated_on' => $post->getDateUpdatedOn()->format(\DateTime::ISO8601)
         ];
     }
 }

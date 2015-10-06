@@ -1,7 +1,16 @@
 <section class="post-item">
-  <p>{{ post.content }}</p>
-  <footer>
-    <div>Id: {{post.id}}</div>
-    <div>ThreadId: {{post.thread_id}}</div>
-  </footer>
+  <header>
+    <dl>
+      <dt>Author</dt>
+      <dd>{{post.author}}</dd>
+      <dt>Created on</dt>
+      <dd>{{post.created_on }}</dd>
+      <dt>ID</dt>
+      <dd>{{post.id}}</dd>
+    </dl>
+  </header>
+  <aside class="attachment"></aside>
+  <div>
+    {{post.content}}
+  </div>
 </section>

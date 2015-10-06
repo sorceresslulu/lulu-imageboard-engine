@@ -33,6 +33,11 @@ class LeagueControllerStrategy extends AbstractStrategy implements StrategyInter
 
         /** @var AbstractController $controllerInstance */
         $controllerInstance = $this->serviceManager->get($controller);
+
+        if(!($controllerInstance instanceof AbstractController)) {
+            throw new \Exception(sprintf('Invalid controller `%s`', get_class($controllerInstance)));
+        }
+
         $controllerInstance->setup($this->getRequest(), $vars);
 
         if(!(method_exists($controllerInstance, $action))) {

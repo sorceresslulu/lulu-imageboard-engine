@@ -23,26 +23,30 @@
       "bower_components/angular-ui-router/release/angular-ui-router.min.js",
       "bower_components/angular-resource/angular-resource.min.js",
       "bower_components/sprintf/dist/sprintf.min.js",
-      "bower_components/sprintf/dist/angular-sprintf.min.js"
+      "bower_components/sprintf/dist/angular-sprintf.min.js",
+      "bower_components/moment/min/moment.min.js",
+      "bower_components/angular-moment/angular-moment.js"
     ],
     "development": [
       "bower_components/angular/angular.js",
       "bower_components/angular-ui-router/release/angular-ui-router.js",
       "bower_components/angular-resource/angular-resource.js",
       "bower_components/sprintf/dist/sprintf.js",
-      "bower_components/sprintf/dist/angular-sprintf.js"
+      "bower_components/sprintf/dist/angular-sprintf.js",
+      "bower_components/moment/moment.js",
+      "bower_components/angular-moment/angular-moment.min.js"
     ]
   },
   "layout": {
     "main": {
       "vendor": {
         "production": [
-          "bower_components/skeleton/css/normalize.css",
-          "bower_components/skeleton/css/skeleton.css"
+          "bower_components/reset-css/reset.css",
+          "bower_compoentns/normalize-css/normalize.css"
         ],
         "development": [
-          "bower_components/skeleton/css/normalize.css",
-          "bower_components/skeleton/css/skeleton.css"
+          "bower_components/reset-css/reset.css",
+          "bower_compoentns/normalize-css/normalize.css"
         ]
       }
     }

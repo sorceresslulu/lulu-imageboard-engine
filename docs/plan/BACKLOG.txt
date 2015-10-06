@@ -1,6 +1,8 @@
 BACKLOG.TXT
 ===========
 
+[ ] FEATURE0034: thread / attachment / image attachment
+[ ] FEATURE0033: thread / a little of real css
 [x] FEATURE0032: reply service
 [x] FEATURE0031: main layout
 [x] FEATURE0030: bower / default layout

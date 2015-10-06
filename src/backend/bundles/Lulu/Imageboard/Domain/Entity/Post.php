@@ -25,6 +25,20 @@ class Post
     protected $thread;
 
     /**
+     * Created On
+     * @Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $dateCreatedOn;
+
+    /**
+     * Updated On
+     * @Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $dateUpdatedOn;
+
+    /**
      * Author
      * @Column(type="string")
      * @var string
@@ -44,6 +58,14 @@ class Post
      * @var string
      */
     protected $content;
+
+    /**
+     * Post constructor.
+     */
+    public function __construct() {
+        $this->dateCreatedOn = new \DateTime();
+        $this->dateUpdatedOn = new \DateTime();
+    }
 
     /**
      * @return int
@@ -66,6 +88,38 @@ class Post
      */
     public function setThread($thread) {
         $this->thread = $thread;
+    }
+
+    /**
+     * Returns created on
+     * @return \DateTime
+     */
+    public function getDateCreatedOn() {
+        return $this->dateCreatedOn;
+    }
+
+    /**
+     * Set created on
+     * @param \DateTime $dateCreatedOn
+     */
+    public function setDateCreatedOn($dateCreatedOn) {
+        $this->dateCreatedOn = $dateCreatedOn;
+    }
+
+    /**
+     * Returns updated on
+     * @return \DateTime
+     */
+    public function getDateUpdatedOn() {
+        return $this->dateUpdatedOn;
+    }
+
+    /**
+     * Set updated on
+     * @param \DateTime $dateUpdatedOn
+     */
+    public function setDateUpdatedOn($dateUpdatedOn) {
+        $this->dateUpdatedOn = $dateUpdatedOn;
     }
 
     /**
