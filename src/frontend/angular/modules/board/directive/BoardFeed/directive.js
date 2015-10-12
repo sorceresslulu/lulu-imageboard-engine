@@ -22,7 +22,7 @@
       replace: true,
       restrict: 'E',
       controller: LiBoardFeed,
-      templateUrl: 'modules/board/component/BoardFeed/template.html',
+      templateUrl: 'modules/board/directive/BoardFeed/template.html',
       scope: {
         boardFeed: '='
       }

@@ -31,7 +31,7 @@
       replace: true,
       restrict: 'E',
       controller: PageControl,
-      templateUrl: 'modules/main/component/PageControl/template.html',
+      templateUrl: 'modules/main/directive/PageControl/template.html',
       scope: {
         'pageControl': '='
       }
