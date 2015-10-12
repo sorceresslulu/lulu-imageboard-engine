@@ -12,7 +12,8 @@
       this.formData = {
         author: '',
         email: '',
-        content: ''
+        content: '',
+        attachment: null
       }
     }
 
@@ -40,6 +41,7 @@
       this.formData.author = '';
       this.formData.email = '';
       this.formData.content = '';
+      this.formData.attachment = null;
     }
   }
 })(angular);

@@ -25,7 +25,8 @@
       "bower_components/sprintf/dist/sprintf.min.js",
       "bower_components/sprintf/dist/angular-sprintf.min.js",
       "bower_components/moment/min/moment.min.js",
-      "bower_components/angular-moment/angular-moment.js"
+      "bower_components/angular-moment/angular-moment.js",
+      "bower_components/ng-file-model/ng-file-model.js"
     ],
     "development": [
       "bower_components/angular/angular.js",
@@ -34,7 +35,8 @@
       "bower_components/sprintf/dist/sprintf.js",
       "bower_components/sprintf/dist/angular-sprintf.js",
       "bower_components/moment/moment.js",
-      "bower_components/angular-moment/angular-moment.min.js"
+      "bower_components/angular-moment/angular-moment.min.js",
+      "bower_components/ng-file-model/ng-file-model.js"
     ]
   },
   "layout": {

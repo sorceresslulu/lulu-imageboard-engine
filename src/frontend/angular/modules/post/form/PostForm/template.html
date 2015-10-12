@@ -12,5 +12,9 @@
       <label for="formReplyTextareaContent">Content</label>
       <textarea id="formReplyTextareaContent" ng-model="postFormService.formData.content"></textarea>
     </li>
+    <li class="form-element-attachment">
+      <label for="formReplyAttachment">Attachment</label>
+      <input type="file" ng-file-model="postFormService.formData.attachment" id="formReplyAttachment"/>
+    </li>
   </ul>
 </section>

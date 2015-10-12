@@ -15,8 +15,9 @@
   ],
   "dependencies": {
     "angular": "~1.4.5",
-    "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.4.6",
+    "angular-ui-router": "~0.2.15",
+    "ng-file-model": "*",
     "sprintf": "~1.0.3"
   }
 }

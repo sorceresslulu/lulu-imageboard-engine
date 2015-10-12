@@ -4,6 +4,7 @@
       'angularMoment',
       'ngResource',
       'ui.router',
+      "ng-file-model",
       'templates'
     ])
   ;
