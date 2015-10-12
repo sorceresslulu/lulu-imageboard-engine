@@ -23,4 +23,27 @@ header.layout-header
   font-weight: bold
   margin-bottom: 1em
 
+input[type="text"], input[type="email"], textarea
+  padding: 5px
+  border: 1px solid #ccc
+  border-radius: 3px
+
+  &:focus
+    border-color: dodgerblue
+
+input[type="button"], input[type="submit"]
+  border: 1px solid #ccc
+  background-color: #f0f0f0
+  padding: 10px
+  color: #000
+  font-weight: bold
+  border-radius: 3px
+  text-transform: uppercase
+
+  &:hover, &:focus
+    border-color: dodgerblue
+    background-color: dodgerblue
+    color: white
+    outline: 0!important
+
 @import "directive/Spinner/spinner"

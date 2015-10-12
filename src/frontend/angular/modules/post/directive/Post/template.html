@@ -10,7 +10,5 @@
     </dl>
   </header>
   <aside class="attachment"></aside>
-  <div class="content">
-    {{post.content}}
-  </div>
+  <div class="content" ng-bind-html="post.content | PostContentParser"></div>
 </section>
