@@ -1,9 +1,6 @@
 <article class="board board-feed">
   <div ng-if="ready">
-    <header>
-      <h1>{{ board.title }}</h1>
-      <p>{{ board.description }}</p>
-    </header>
+    <li-board-layout-header board="board"></li-board-layout-header>
     <li-board-feed board-feed="boardFeed"></li-board-feed>
     <li-create-thread-form board="board" board-feed="boardFeed"></li-create-thread-form>
   </div>

@@ -8,11 +8,10 @@
 
   factory.$inject = [
     'PageControlFactory',
-    'BoardFeedRestResource',
     'ThreadService'
   ];
 
-  function factory(PageControlFactory, BoardFeedRestResource, /* TODO:: remove this temp solution */ ThreadService) {
+  function factory(PageControlFactory, ThreadService) {
     var THREADS_PER_PAGE = 3;
 
     function BoardFeed(board) {
@@ -90,6 +89,8 @@
      * @param thread
      */
     function pushThread(thread) {
+      thread.link = ThreadService.getThreadLink(this.board.url, thread.id);
+
       this.threads.push(thread);
     }
 

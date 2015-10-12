@@ -10,15 +10,10 @@
 
   function factory($scope, BoardService) {
     function BoardIndexController() {
-      $scope.ready = false;
       $scope.boards = [];
 
-      BoardService.promise.then(function(boards) {
-        boards.forEach(function(board) {
-          $scope.boards.push(board);
-        });
-
-        $scope.ready = true;
+      BoardService.getAllBoards().forEach(function(board) {
+        $scope.boards.push(board);
       });
     }
 

@@ -46,8 +46,11 @@ class Bootstrap
      * Setup configuration
      */
     private function setupConfiguration() {
-        $this->application->getServiceManager()->getInstances()->addService('DoctrineConfiguration', $this->application->getConfiguration()['doctrine']);
-        $this->application->getServiceManager()->getInstances()->addService('DoctrineApplicationPath', __DIR__);
+        $sm = $this->application->getServiceManager()->getInstances();
+
+        $sm->addService('BootstrapConfiguration', $this->application->getConfiguration()['frontend']['bootstrap']);
+        $sm->addService('DoctrineConfiguration', $this->application->getConfiguration()['doctrine']);
+        $sm->addService('DoctrineApplicationPath', __DIR__);
     }
 
     /**

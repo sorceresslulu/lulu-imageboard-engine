@@ -1,6 +1,7 @@
 BACKLOG.TXT
 ===========
 
+[x] FEATURE0035: bootstrap (angular)
 [ ] FEATURE0034: thread / attachment / image attachment
 [ ] FEATURE0033: thread / a little of real css
 [x] FEATURE0032: reply service

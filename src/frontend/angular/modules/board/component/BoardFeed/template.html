@@ -2,8 +2,8 @@
   <div ng-if="boardFeed.status.ready">
     <ul>
       <li ng-repeat="thread in boardFeed.getThreads()">
-        ThreadId: {{thread.id}}
-        <a ng-href="/thread/view/{{thread.id}}/">[View thread]</a>
+        ThreadId: {{::thread.id}}
+        <a ng-href="{{::thread.link}}">[View thread]</a>
       </li>
     </ul>
     <li-page-control page-control="boardFeed.getPageControl()"></li-page-control>

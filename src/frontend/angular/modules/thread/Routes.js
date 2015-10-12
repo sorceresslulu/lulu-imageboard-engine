@@ -9,7 +9,7 @@
   function RouterConfig($stateProvider) {
     $stateProvider
       .state('thread-view-by-thread-id', {
-        url: '/thread/view/:threadId/',
+        url: '/:boardUrl/thread/:threadId/',
         controller: 'ThreadViewThreadController',
         templateUrl: 'modules/thread/controller/ViewThread/template.html'
       })

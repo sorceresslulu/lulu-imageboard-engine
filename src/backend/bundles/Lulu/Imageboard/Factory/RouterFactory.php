@@ -15,6 +15,7 @@ class RouterFactory implements FactoryInterface
         $router = new RouteCollection();
         $router->setStrategy(new LeagueControllerStrategy($serviceManager));
 
+        $this->setupMainBootstrap($router);
         $this->setupRESTBoard($router);
         $this->setupRESTThread($router);
         $this->setupRESTThreadFeed($router);
@@ -22,6 +23,14 @@ class RouterFactory implements FactoryInterface
         $this->setupRESTThreadReply($router);
 
         return $router;
+    }
+
+    /**
+     * Main - Bootstrap (bootstrap)
+     * @param $router
+     */
+    protected function setupMainBootstrap(RouteCollection $router) {
+        $router->get('/backend/main/bootstrap/', 'Main\BootstrapController::bootstrap');
     }
 
     /**

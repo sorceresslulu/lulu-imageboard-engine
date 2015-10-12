@@ -14,7 +14,7 @@
         templateUrl: 'modules/board/controller/Index/template.html'
       })
       .state('board-feed', {
-        url: '/board/:boardURL/',
+        url: '/board/:boardUrl/',
         controller: 'BoardFeedController',
         templateUrl: 'modules/board/controller/Feed/template.html'
       })

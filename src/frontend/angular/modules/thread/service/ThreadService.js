@@ -1,4 +1,4 @@
-(function(angular) {
+(function(angular, sprintf) {
   angular
     .module('lulu-imageboard')
     .factory('ThreadService', factory)
@@ -13,6 +13,7 @@
     ThreadService.prototype.createNewThread = createNewThread;
     ThreadService.prototype.getThreadFeed = getThreadFeed;
     ThreadService.prototype.getThreadsByBoardId = getThreadsByBoardId;
+    ThreadService.prototype.getThreadLink = getThreadLink;
 
     return new ThreadService();
 
@@ -48,5 +49,18 @@
     function getThreadFeed(threadId) {
       return ThreadRestResource.feed.query({ 'threadId': threadId }).$promise;
     }
+
+    /**
+     * Returns link to board service
+     * @param boardUrl
+     * @param threadId
+     * @returns {*}
+     */
+    function getThreadLink(boardUrl, threadId) {
+      return sprintf("/%(boardUrl)s/thread/%(threadId)d/", {
+        boardUrl: boardUrl,
+        threadId: threadId
+      });
+    }
   }
-})(angular);
+})(angular, sprintf);

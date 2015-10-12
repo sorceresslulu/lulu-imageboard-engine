@@ -13,13 +13,11 @@
       this.promise = null;
       this.boards = [];
       this.urlMap = {};
-
-      this.fetchBoards();
     }
 
     BoardService.prototype.getAllBoards = getAllBoards;
     BoardService.prototype.getBoardById = getBoardById;
-    BoardService.prototype.getBoardByURL = getBoardByURL;
+    BoardService.prototype.getBoardByUrl = getBoardByUrl;
     BoardService.prototype.fetchBoards = fetchBoards;
     BoardService.prototype._applyBoards = _applyBoards;
 
@@ -38,7 +36,7 @@
      * @param boardURL
      * @returns {*}
      */
-    function getBoardByURL(boardURL) {
+    function getBoardByUrl(boardURL) {
       if(this.urlMap.hasOwnProperty(boardURL)) {
         return this.urlMap[boardURL];
       }else{

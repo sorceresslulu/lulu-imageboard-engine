@@ -1,13 +1,17 @@
 section.post-item
   border: 1px solid #ccc
-  border-radius: 5px
-  padding: 5px
+  border-radius: 3px
+  padding: 10px
+  margin-bottom: 10px
+  min-height: 140px
 
   >header
+    margin-bottom: 10px
+    padding-bottom: 10px
+    border-bottom: 1px solid #ccc
+
     dl
       dt, dd
-        margin: 0
-        padding: 0
         display: inline-block
 
       dt
@@ -16,5 +20,20 @@ section.post-item
         &:after
           content: ':'
 
-      dl
-        margin-right: 20px
+      dd
+        &:after
+          color: #ccc
+          content: '|'
+          padding: 0 5px
+
+      dd:last-child:after
+        display: none
+
+  aside.attachment
+    display: block
+    float: left
+    width: 150px
+    height: 100px
+    border: 1px solid #ccc
+    margin-right: 20px
+    margin-bottom: 20px

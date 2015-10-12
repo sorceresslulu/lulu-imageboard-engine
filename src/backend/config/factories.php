@@ -5,11 +5,13 @@ return call_user_func(function() {
     return [
         'factories' => [
             'Router' => $FACTORY_DIR.'\RouterFactory',
+            'Bootstrap' => $FACTORY_DIR.'\Service\BootstrapServiceFactory',
             'BoardRESTService' => $FACTORY_DIR.'\Service\REST\BoardRESTServiceFactory',
             'PostRESTService' => $FACTORY_DIR.'\Service\REST\PostRESTServiceFactory',
             'ThreadRESTService' => $FACTORY_DIR.'\Service\REST\ThreadRESTServiceFactory',
             'ThreadFeedRESTService' => $FACTORY_DIR.'\Service\REST\Thread\ThreadFeedRESTServiceFactory',
             'ThreadReplyRESTService' => $FACTORY_DIR.'\Service\REST\Thread\ThreadReplyRESTServiceFactory',
+            'Controller\Main\BootstrapController' => $FACTORY_DIR.'\Controller\Main\BootstrapControllerFactory',
             'Controller\Board\IndexController' => $FACTORY_DIR.'\Controller\Board\IndexControllerFactory',
             'Controller\Thread\IndexController' => $FACTORY_DIR.'\Controller\Thread\IndexControllerFactory',
             'Controller\Thread\FeedController' => $FACTORY_DIR.'\Controller\Thread\FeedControllerFactory',
