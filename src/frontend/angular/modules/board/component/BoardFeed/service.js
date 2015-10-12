@@ -25,7 +25,7 @@
       this.pageControl = PageControlFactory.create(THREADS_PER_PAGE, function(offset, limit) {
         boardFeedService.status.ready = false;
 
-        ThreadService.getThreadsByBoardId(boardFeedService.board.sId, {
+        return ThreadService.getThreadsByBoardId(boardFeedService.board.sId, {
           offset: offset,
           limit: limit
         }).then(function(queryList) {
@@ -58,7 +58,7 @@
      * Fetch board feed
      */
     function fetch() {
-      this.pageControl.update();
+      return this.pageControl.update();
     }
 
     /**

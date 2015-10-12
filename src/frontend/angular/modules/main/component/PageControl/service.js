@@ -85,7 +85,7 @@
       var offset = this.page * this.itemsPerPage;
       var limit = this.itemsPerPage;
 
-      this.loadHandler(offset, limit);
+      return this.loadHandler(offset, limit);
     }
 
     function maxPages() {
