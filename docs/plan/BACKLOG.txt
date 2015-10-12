@@ -1,6 +1,10 @@
 BACKLOG.TXT
 ===========
 
+[ ] FEATURE0038: Thread / format / basic formatter
+[x] FEATURE0039: Thread / textarea content
+[ ] FEATURE0038: Board / Features [frontend]
+[ ] FEATURE0037: Board / Features [backend]
 [x] FEATURE0036: spinner service
 [x] FEATURE0035: bootstrap (angular)
 [ ] FEATURE0034: thread / attachment / image attachment
