@@ -38,6 +38,13 @@ class Board
     protected $description;
 
     /**
+     * Features
+     * @Column(type="array")
+     * @var array
+     */
+    protected $features;
+
+    /**
      * Returns Id
      * @return int
      */
@@ -91,5 +98,21 @@ class Board
      */
     public function setDescription($description) {
         $this->description = $description;
+    }
+
+    /**
+     * Returns features
+     * @return array
+     */
+    public function &getFeatures() {
+        return $this->features;
+    }
+
+    /**
+     * Set features
+     * @param array $features
+     */
+    public function setFeatures($features) {
+        $this->features = $features;
     }
 }
