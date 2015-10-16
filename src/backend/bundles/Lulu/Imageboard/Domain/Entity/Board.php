@@ -39,7 +39,7 @@ class Board
 
     /**
      * Features
-     * @Column(type="array")
+     * @Column(type="json_array")
      * @var array
      */
     protected $features;

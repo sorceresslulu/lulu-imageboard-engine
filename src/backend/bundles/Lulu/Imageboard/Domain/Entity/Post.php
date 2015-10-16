@@ -60,6 +60,13 @@ class Post
     protected $content;
 
     /**
+     * List of attachments
+     * @Column(type="json_array")
+     * @var string[]
+     */
+    protected $attachments;
+
+    /**
      * Post constructor.
      */
     public function __construct() {
@@ -168,5 +175,21 @@ class Post
      */
     public function setContent($content) {
         $this->content = $content;
+    }
+
+    /**
+     * Returns list of attachments
+     * @return \string[]
+     */
+    public function &getAttachments() {
+        return $this->attachments;
+    }
+
+    /**
+     * Set lsit of attachments
+     * @param \string[] $attachments
+     */
+    public function setAttachments($attachments) {
+        $this->attachments = $attachments;
     }
 }

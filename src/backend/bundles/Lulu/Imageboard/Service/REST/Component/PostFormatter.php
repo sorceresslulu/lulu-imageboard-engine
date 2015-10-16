@@ -16,7 +16,8 @@ class PostFormatter implements PostFormatterInterface
             'email' => $post->getEmail(),
             'content' => $post->getContent(),
             'created_on' => $post->getDateCreatedOn()->format(\DateTime::ISO8601),
-            'updated_on' => $post->getDateUpdatedOn()->format(\DateTime::ISO8601)
+            'updated_on' => $post->getDateUpdatedOn()->format(\DateTime::ISO8601),
+            'attachments' => $post->getAttachments()
         ];
     }
 }

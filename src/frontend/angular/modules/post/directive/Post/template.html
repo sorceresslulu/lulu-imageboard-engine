@@ -9,6 +9,6 @@
       <dd>{{post.id}}</dd>
     </dl>
   </header>
-  <aside class="attachment"></aside>
+  <li-post-attachments-list attachments="post.attachments"></li-post-attachments-list>
   <div class="content" ng-bind-html="post.content | PostContentParser"></div>
 </section>
