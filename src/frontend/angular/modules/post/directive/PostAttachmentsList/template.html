@@ -2,6 +2,7 @@
   <ul>
     <li ng-repeat="attachment in attachments" ng-switch="attachment.type">
       <li-post-attachment-image attachment="attachment" ng-switch-when="image"></li-post-attachment-image>
+      <li-post-attachment-youtube attachment="attachment" ng-switch-when="youtube"></li-post-attachment-youtube>
     </li>
   </ul>
 </aside>

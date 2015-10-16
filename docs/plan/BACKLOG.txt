@@ -2,6 +2,7 @@ BACKLOG.TXT
 ===========
 
 
+[x] FEATURE0036: thread / attachment / youtube attachment / frontend
 [ ] FEATURE0035: thread / attachment / image attachment / frontend / 2ch-like preview
 [x] FEATURE0034: thread / attachment / image attachment / frontend
 
