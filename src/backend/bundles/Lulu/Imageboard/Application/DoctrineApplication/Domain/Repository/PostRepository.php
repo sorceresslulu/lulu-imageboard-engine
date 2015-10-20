@@ -27,15 +27,6 @@ class PostRepository implements PostRepositoryInterface
     /**
      * @inheritDoc
      */
-    public function createPost(Post $post) {
-        $em = $this->repositories->getEntityManager();
-        $em->persist($post);
-        $em->flush();
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function getPostById($id) {
         $post = $this->repositories->posts()->find($id);
 
@@ -50,7 +41,6 @@ class PostRepository implements PostRepositoryInterface
      * @inheritDoc
      */
     public function getPostsByIds(array $ids) {
-        $repo = $this->repositories->posts();
         $order = ['id' => 'desc'];
         $criteria = [
             'id' => $ids

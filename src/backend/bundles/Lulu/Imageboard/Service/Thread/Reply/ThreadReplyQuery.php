@@ -2,6 +2,7 @@
 namespace Lulu\Imageboard\Service\Thread\Reply;
 
 use Lulu\Imageboard\Domain\Entity\Post;
+use Lulu\Imageboard\Util\RequestFile;
 
 class ThreadReplyQuery
 {
@@ -18,13 +19,21 @@ class ThreadReplyQuery
     private $post;
 
     /**
+     * Request Files
+     * @var RequestFile[]
+     */
+    private $uploadFiles = [];
+
+    /**
      * ThreadReplyQuery constructor.
      * @param int $threadId
      * @param Post $post
+     * @param \Lulu\Imageboard\Util\RequestFile[] $uploadFiles
      */
-    public function __construct($threadId, Post $post) {
+    public function __construct($threadId, Post $post, array $uploadFiles) {
         $this->threadId = $threadId;
         $this->post = $post;
+        $this->uploadFiles = $uploadFiles;
     }
 
     /**
@@ -41,5 +50,13 @@ class ThreadReplyQuery
      */
     public function getPost() {
         return $this->post;
+    }
+
+    /**
+     * Returns upload files
+     * @return \Lulu\Imageboard\Util\RequestFile[]
+     */
+    public function getUploadFiles() {
+        return $this->uploadFiles;
     }
 }

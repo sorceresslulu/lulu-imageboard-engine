@@ -1,11 +1,19 @@
 <?php
 namespace Lulu\Imageboard\Service\Thread\Reply;
 
-use Lulu\Imageboard\Domain\Repository\PostRepositoryInterface;
+use Doctrine\ORM\EntityManager;
+use Lulu\Imageboard\Service\Post\Attachment\Upload\UploadService;
 use Lulu\Imageboard\Domain\Repository\ThreadRepositoryInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
 
 class ThreadReplyService
 {
+    /**
+     * Entity Manager
+     * @var EntityManager
+     */
+    private $entityManager;
+
     /**
      * Thread Repository
      * @var ThreadRepositoryInterface
@@ -13,19 +21,21 @@ class ThreadReplyService
     private $threadRepository;
 
     /**
-     * Post Repository
-     * @var PostRepositoryInterface
+     * Upload Service
+     * @var UploadService
      */
-    private $postRepository;
+    private $uploadService;
 
     /**
      * ThreadReplyService constructor.
+     * @param EntityManager $entityManager
      * @param ThreadRepositoryInterface $threadRepository
-     * @param PostRepositoryInterface $postRepository
+     * @param UploadService $uploadService
      */
-    public function __construct(ThreadRepositoryInterface $threadRepository, PostRepositoryInterface $postRepository) {
+    public function __construct(EntityManager $entityManager, ThreadRepositoryInterface $threadRepository, UploadService $uploadService) {
+        $this->entityManager = $entityManager;
         $this->threadRepository = $threadRepository;
-        $this->postRepository = $postRepository;
+        $this->uploadService = $uploadService;
     }
 
     /**
@@ -35,9 +45,28 @@ class ThreadReplyService
      */
     public function reply(ThreadReplyQuery $replyQuery)
     {
-        $thread = $this->threadRepository->getThreadById($replyQuery->getThreadId());
-        $replyQuery->getPost()->setThread($thread);
+        $em = $this->entityManager;
+        $em->beginTransaction();
 
-        $this->postRepository->createPost($replyQuery->getPost());
+        try {
+            $post = $replyQuery->getPost();
+            $thread = $this->threadRepository->getThreadById($replyQuery->getThreadId());
+            $thread->getPosts()->add($post);
+
+            $uploadQuery = $this->uploadService->createQuery($replyQuery->getPost(), $replyQuery->getUploadFiles());
+            $uploadQuery->validate();
+
+            $em->persist($post);
+            $em->flush();
+
+            $post->setAttachments(array_merge_recursive($post->getAttachments(), $uploadQuery->process()));
+
+            $em->persist($post);
+            $em->flush();
+            $em->commit();
+        }catch(Exception $e) {
+            $em->rollback();
+            throw $e;
+        }
     }
 }

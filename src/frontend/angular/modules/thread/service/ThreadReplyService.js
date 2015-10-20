@@ -23,7 +23,6 @@
      * @returns {promise}
      */
     function reply(threadId, formData) {
-      console.log('reply', threadId, formData);
       return ReplyResource.save({ threadId: threadId }, formData).$promise;
     }
   }

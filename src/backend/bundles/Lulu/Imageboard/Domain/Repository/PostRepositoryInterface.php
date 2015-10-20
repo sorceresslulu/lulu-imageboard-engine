@@ -7,12 +7,6 @@ use Lulu\Imageboard\Domain\Repository\Post\PostQuery;
 interface PostRepositoryInterface
 {
     /**
-     * Create post
-     * @param Post $post
-     */
-    public function createPost(Post $post);
-
-    /**
      * Returns post by Id
      * @param $id
      * @return Post

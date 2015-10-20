@@ -3,6 +3,7 @@ namespace Lulu\Imageboard\Util\RequestHelpers;
 
 use Lulu\Imageboard\Domain\Entity\Post;
 use Lulu\Imageboard\Service\Thread\Reply\ThreadReplyQuery;
+use Lulu\Imageboard\Util\RequestFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class CreateReplyQueryBuilder
@@ -45,7 +46,22 @@ class CreateReplyQueryBuilder
         return $this->threadId;
     }
 
+    /**
+     * Build Thread Reply Query
+     * @return ThreadReplyQuery
+     */
     public function build() {
+        $post = $this->buildPost();
+        $attachments = $this->buildAttachment();
+
+        return new ThreadReplyQuery($this->threadId, $post, $attachments);
+    }
+
+    /**
+     * Build Post
+     * @return Post
+     */
+    protected function buildPost() {
         $request = $this->request;
 
         $post = new Post();
@@ -53,6 +69,21 @@ class CreateReplyQueryBuilder
         $post->setAuthor($request->get('author'));
         $post->setEmail($request->get('email'));
 
-        return new ThreadReplyQuery($this->threadId, $post);
+        return $post;
+    }
+
+    /**
+     * Build attachments
+     * @return array
+     */
+    protected function buildAttachment() {
+        $attachments = [];
+        $request = $this->request;
+
+        foreach ($request->get('attachments') as $attachment) {
+            $attachments[] = RequestFile::createFromRequest($attachment);
+        }
+
+        return $attachments;
     }
 }
