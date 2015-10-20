@@ -3,10 +3,10 @@
 
   angular
     .module('lulu-imageboard')
-    .controller('BoardFeedController', factory)
+    .controller('BoardFeedController', controller)
   ;
 
-  factory.$inject = [
+  controller.$inject = [
     '$scope',
     '$stateParams',
     'SpinnerService',
@@ -14,28 +14,24 @@
     'BoardFeed'
   ];
 
-  function factory($scope, $stateParams, SpinnerService, BoardService, BoardFeed) {
-    function BoardFeedController() {
-      this.scope = $scope;
-      this.boardUrl = $stateParams.boardUrl;
+  function controller($scope, $stateParams, SpinnerService, BoardService, BoardFeed) {
+    this.scope = $scope;
+    this.boardUrl = $stateParams.boardUrl;
 
-      $scope.ready = SpinnerService.enable();
+    $scope.ready = SpinnerService.enable();
 
-      (function loadBoardFeed(controller, scope) {
-        controller.board = BoardService.getBoardByUrl(controller.boardUrl);
-        controller.boardFeed = BoardFeed.create(controller.board);
-        controller.boardFeed.fetch().then(function(data) {
-          (function setupScope() {
-            scope.board = controller.board;
-            scope.boardFeed = controller.boardFeed;
-            scope.ready = SpinnerService.disable();
-          })();
+    (function loadBoardFeed(controller, scope) {
+      controller.board = BoardService.getBoardByUrl(controller.boardUrl);
+      controller.boardFeed = BoardFeed.create(controller.board);
+      controller.boardFeed.fetch().then(function(data) {
+        (function setupScope() {
+          scope.board = controller.board;
+          scope.boardFeed = controller.boardFeed;
+          scope.ready = SpinnerService.disable();
+        })();
 
-          return data;
-        });
-      })(this, $scope);
-    }
-
-    return new BoardFeedController();
+        return data;
+      });
+    })(this, $scope);
   }
 })(angular);

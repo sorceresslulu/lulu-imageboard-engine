@@ -3,10 +3,10 @@
 
   angular
     .module('lulu-imageboard')
-    .controller('ThreadViewThreadController', factory)
+    .controller('ThreadViewThreadController', controller)
   ;
 
-  factory.$inject = [
+  controller.$inject = [
     '$scope',
     '$stateParams',
     'SpinnerService',
@@ -14,22 +14,18 @@
     'ThreadService',
     'ThreadFeedFactory'
   ];
+x
+  function controller($scope, $stateParams, SpinnerService, BoardService, ThreadService, ThreadFeedFactory) {
+    $scope.ready = SpinnerService.enable();
+    $scope.threadId = $stateParams.threadId;
+    $scope.board = BoardService.getBoardByUrl($stateParams.boardUrl);
+    $scope.threadFeed = ThreadFeedFactory.create();
 
-  function factory($scope, $stateParams, SpinnerService, BoardService, ThreadService, ThreadFeedFactory) {
-    function ThreadViewThreadController() {
-      $scope.ready = SpinnerService.enable();
-      $scope.threadId = $stateParams.threadId;
-      $scope.board = BoardService.getBoardByUrl($stateParams.boardUrl);
-      $scope.threadFeed = ThreadFeedFactory.create();
+    ThreadService.getThreadFeed($scope.threadId).then(function(threadDTO) {
+      $scope.ready = SpinnerService.disable();
+      $scope.threadFeed.setPosts(threadDTO.posts);
 
-      ThreadService.getThreadFeed($scope.threadId).then(function(threadDTO) {
-        $scope.ready = SpinnerService.disable();
-        $scope.threadFeed.setPosts(threadDTO.posts);
-
-        return threadDTO;
-      });
-    }
-
-    return new ThreadViewThreadController();
+      return threadDTO;
+    });
   }
 })(angular);

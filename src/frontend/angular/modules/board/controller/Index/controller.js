@@ -3,20 +3,16 @@
 
   angular
     .module('lulu-imageboard')
-    .controller('BoardIndexController', factory)
+    .controller('BoardIndexController', controller)
   ;
 
-  factory.$inject = ['$scope', 'BoardService'];
+  controller.$inject = ['$scope', 'BoardService'];
 
-  function factory($scope, BoardService) {
-    function BoardIndexController() {
-      $scope.boards = [];
+  function controller($scope, BoardService) {
+    $scope.boards = [];
 
-      BoardService.getAllBoards().forEach(function(board) {
-        $scope.boards.push(board);
-      });
-    }
-
-    return new BoardIndexController();
+    BoardService.getAllBoards().forEach(function(board) {
+      $scope.boards.push(board);
+    });
   }
 })(angular);

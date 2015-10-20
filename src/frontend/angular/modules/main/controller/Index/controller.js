@@ -1,13 +1,11 @@
 (function(angular) {
   angular
     .module('lulu-imageboard')
-    .controller('MainIndexController', factory)
+    .controller('MainIndexController', controller)
   ;
 
-  function factory() {
-    function MainIndexController() {
-    }
+  controller.$inject = [];
 
-    return new MainIndexController();
+  function controller() {
   }
 })(angular);

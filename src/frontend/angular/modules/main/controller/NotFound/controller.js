@@ -3,13 +3,11 @@
 
   angular
     .module('lulu-imageboard')
-    .controller('MainNotFoundController', factory)
+    .controller('MainNotFoundController', controller)
   ;
 
-  function factory() {
-    function MainNotFoundController() {
-    }
+  controller.$inject = [];
 
-    return new MainNotFoundController();
+  function controller() {
   }
 })(angular);
